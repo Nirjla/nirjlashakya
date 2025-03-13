@@ -19,14 +19,14 @@ jobs:
           node-version: "20" # or any other version you're using
 
       - name: Install dependencies
-        run: pnpm install # or `pnpm install` if you're using pnpm
+        run: pnpm install # or `npm install` if you're using npm
 
       - name: Build the project
-        run: pnpm run build # or `pnpm run build` if you're using pnpm
+        run: pnpm run build # or `npm run build` if you're using npm
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages (main branch)
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
-          branch: gh-pages # Deploy to the gh-pages branch
+          branch: main # Deploy directly to the main branch
           folder: dist # The folder to deploy (your build output folder)
           token: ${{ secrets.GITHUB_TOKEN }} # Automatically provided by GitHub
