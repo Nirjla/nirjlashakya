@@ -18,11 +18,14 @@ jobs:
         with:
           node-version: "20" # or any other version you're using
 
+      - name: Install pnpm
+        run: npm install -g pnpm # Install pnpm globally
+
       - name: Install dependencies
-        run: pnpm install # or `npm install` if you're using npm
+        run: pnpm install # Use pnpm to install dependencies
 
       - name: Build the project
-        run: pnpm run build # or `npm run build` if you're using npm
+        run: pnpm run build # Run the build command using pnpm
 
       - name: Deploy to GitHub Pages (main branch)
         uses: JamesIves/github-pages-deploy-action@4.1.0
