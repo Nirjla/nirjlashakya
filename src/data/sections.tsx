@@ -6,7 +6,7 @@ export const sections: Record<string, JSX.Element> = {
         Hi, I’m Nirjala/Nirjla, a human with a passion for learning and growth.
       </p>
       <p className="mb-2">
-        As a inspiring full-stack developer with in the interest in AI,I’m all about writing clean, innovative solutions.
+        As a inspiring full-stack developer with in the interest in AI,I’m all about writing clean code, innovative solutions.
       </p>
       <p>
         When I’m not deep in code, you’ll probably find me on YouTube, diving into trending topics or dissecting interesting theories and real-world cases. It’s all part of my drive to stay curious, expand my knowledge, and apply fresh insights to my work.

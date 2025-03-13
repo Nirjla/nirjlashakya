@@ -22,7 +22,7 @@ const Terminal = forwardRef<HTMLDivElement, TerminalProps>(
             <div className="w-3 h-3 rounded-full bg-green-500"></div>
           </div>
           <div className="mx-auto text-sm font-medium text-muted-foreground">
-            {activeSection ? `${activeSection}.tsx` : "terminal"}
+            {activeSection ? `${activeSection}.tsx` : "zTerminal"}
           </div>
         </div>
 
