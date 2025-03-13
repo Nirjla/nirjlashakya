@@ -10,7 +10,5 @@ export default defineConfig({
   server: {
     allowedHosts: true,
   },
-  esbuild: {
-    loader: 'tsx',  // Explicitly tell Vite how to handle TypeScript
-  },
+
 });
