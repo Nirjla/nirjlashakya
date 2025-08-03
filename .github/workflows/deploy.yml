@@ -24,6 +24,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install # Use pnpm to install dependencies
 
+      - name: Create .env file
+        run: |
+          cat <<EOF > .env  
+          VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          EOF
+
       - name: Build the project
         run: pnpm run build # Run the build command using pnpm
 

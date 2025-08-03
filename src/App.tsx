@@ -24,7 +24,7 @@ function App() {
 
   const terminalRef = useRef<HTMLDivElement>(null)
 
-  const executeCommand = (command: string) => {
+  const executeCommand = async (command: string) => {
     const cmd = command.trim().toLowerCase()
 
     let output: JSX.Element | string = `Command not found: ${cmd}. Type 'help' to see available commands.`
@@ -57,7 +57,7 @@ function App() {
       return
     } else if (sections[cmd]) {
       setActiveSection(cmd)
-      output = sections[cmd]
+      output = await sections[cmd]()
     }
 
     setHistory((prev) => [...prev, { command: cmd, output }])
