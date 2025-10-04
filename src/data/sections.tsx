@@ -1,7 +1,5 @@
-import { supabase } from "../utils/supabase";
-
+import supabase from "../utils/supabase";
 const getAboutMe = async () => {
-  console.log("getAboutMe", supabase);
   const { data, error } = await supabase.from("about").select("*");
   if (error) {
     console.error(error);
@@ -72,7 +70,6 @@ const extractYear = (date: string, requireMonth: boolean = false) => {
 export const sections: Record<string, () => Promise<JSX.Element>> = {
   about: async () => {
     const data = await getAboutMe();
-    console.log(data);
     return (
       <div className="py-2">
         <h2 className="text-lg font-bold text-primary-foreground mb-2">About Me</h2>
@@ -88,7 +85,6 @@ export const sections: Record<string, () => Promise<JSX.Element>> = {
 
   experience: async () => {
     const data = await getExperience();
-    console.log(data);
     return (
       <div className="py-2">
         <h2 className="text-lg font-bold text-primary-foreground mb-3">Work Experience</h2>
@@ -135,32 +131,46 @@ export const sections: Record<string, () => Promise<JSX.Element>> = {
 
   skills: async () => {
     const data = await getSkills();
-    console.log(data);
     return (
       <div className="py-2">
         <h2 className="text-lg font-bold text-primary-foreground mb-3">Technical Skills</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <h3 className="font-bold text-accent mb-2">Frontend</h3>
-
+            <h3 className="font-bold text-accent mb-2">Languages</h3>
             <ul className="list-disc ml-5 text-muted-foreground">
-              {data?.[0]?.frontend_skills?.map((item: string) => (
+              {data?.[0]?.languages?.map((item: string) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h3 className="font-bold text-accent mb-2">Backend</h3>
+            <h3 className="font-bold text-accent mb-2">Frameworks</h3>
             <ul className="list-disc ml-5 text-muted-foreground">
-              {data?.[0]?.backend_skills?.map((item: string) => (
+              {data?.[0]?.frameworks?.map((item: string) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
           </div>
           <div>
-            <h3 className="font-bold text-accent mb-2">Tools & Others</h3>
+            <h3 className="font-bold text-accent mb-2">Databases</h3>
+            <ul className="list-disc ml-5 text-muted-foreground">
+              {data?.[0]?.databases?.map((item: string) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-bold text-accent mb-2">DevOps Tools</h3>
+            <ul className="list-disc ml-5 text-muted-foreground">
+              {data?.[0]?.devops_tools?.map((item: string) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-bold text-accent mb-2">Others</h3>
             <ul className="list-disc ml-5 text-muted-foreground">
               {data?.[0]?.others?.map((item: string) => (
                 <li key={item}>{item}</li>
@@ -185,7 +195,6 @@ export const sections: Record<string, () => Promise<JSX.Element>> = {
 
   education: async () => {
     const data = await getEducation();
-    console.log(data);
     return (
       <div className="py-2">
         <h2 className="text-lg font-bold text-primary-foreground mb-3">Education</h2>
@@ -207,9 +216,14 @@ export const sections: Record<string, () => Promise<JSX.Element>> = {
             <h3 className="font-bold text-accent">{data?.[0]?.degree}</h3>
             <span className="text-muted-foreground text-sm">{extractYear(data?.[0]?.join_date)} - {extractYear(data?.[0]?.end_date) || "Present"}</span>
           </div>
-          <p className="text-primary-foreground">{data?.[0]?.university}</p>
+          <div className="flex justify-between items-start mt-1">
+            <p className="text-primary-foreground">{data?.[0]?.university}</p>
+            <p className="text-muted-foreground text-sm">{data?.[0]?.college}</p>
+          </div>
           <p className="text-muted-foreground mt-1">
-            {data?.[0]?.course_details}
+            {data?.[0]?.course_details.map((item: string) => (
+              <li key={item}>{item}</li>
+            ))}
           </p>
         </div>
 
