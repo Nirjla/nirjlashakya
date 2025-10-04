@@ -2,7 +2,7 @@ import supabase from "../utils/supabase";
 const getAboutMe = async () => {
   const { data, error } = await supabase.from("about").select("*");
   if (error) {
-    console.error(error);
+    console.error("error in about", error);
   }
   return data;
 };
@@ -10,7 +10,7 @@ const getAboutMe = async () => {
 const getExperience = async () => {
   const { data, error } = await supabase.from("experience").select("*").order("join_date", { ascending: false });
   if (error) {
-    console.error(error);
+    console.error("error in experience", error);
   }
   return data;
 };
@@ -18,7 +18,7 @@ const getExperience = async () => {
 const getSkills = async () => {
   const { data, error } = await supabase.from("skills").select("*");
   if (error) {
-    console.error(error);
+    console.error("error in skills", error);
   }
   return data;
 };
@@ -26,7 +26,7 @@ const getSkills = async () => {
 const getEducation = async () => {
   const { data, error } = await supabase.from("education").select("*");
   if (error) {
-    console.error(error);
+    console.error("error in education", error);
   }
   return data;
 };
