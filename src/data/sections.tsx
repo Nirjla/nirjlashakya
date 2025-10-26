@@ -125,6 +125,18 @@ export const sections: Record<string, () => Promise<JSX.Element>> = {
             ))}
           </ul>
         </div>
+        <div className="mb-4">
+          <div className="flex justify-between items-start">
+            <h3 className="font-bold text-accent">{data?.[3]?.position}</h3>
+            <span className="text-muted-foreground text-sm">{extractYear(data?.[3]?.join_date, true)} - {extractYear(data?.[3]?.end_date, true) || "Present"}</span>
+          </div>
+          <p className="text-primary-foreground">{data?.[3]?.company_name}</p>
+          <ul className="list-disc ml-5 mt-2 text-muted-foreground">
+            {data?.[3]?.content_lists?.map((item: string) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
       </div>
     )
   },
