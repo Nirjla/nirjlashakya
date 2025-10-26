@@ -158,7 +158,7 @@ export const sections: Record<string, () => Promise<JSX.Element>> = {
           </div>
 
           <div>
-            <h3 className="font-bold text-accent mb-2">Frameworks</h3>
+            <h3 className="font-bold text-accent mb-2">Web Technologies & Frameworks</h3>
             <ul className="list-disc ml-5 text-muted-foreground">
               {data?.[0]?.frameworks?.map((item: string) => (
                 <li key={item}>{item}</li>
