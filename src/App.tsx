@@ -307,7 +307,7 @@ function App() {
         <div className="py-2 fade-in">
           <p className="text-accent mb-2">Current theme: Matrix Green</p>
           <p className="text-muted-foreground text-sm">
-            Theme switching coming soon! For now, enjoy the hacker aesthetic. 🟢
+            Theme switching coming soon!🟢
           </p>
         </div>
       )
