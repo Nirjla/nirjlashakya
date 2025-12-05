@@ -104,12 +104,12 @@ function App() {
           <p><span className="text-accent">Shell:</span> <span className="text-muted-foreground">zsh/bash enthusiast</span></p>
           <p><span className="text-accent">Languages:</span> <span className="text-muted-foreground">JS, TS</span></p>
           <p><span className="text-accent">IDE:</span> <span className="text-muted-foreground">VS Code / Cursor</span></p>
-          <p><span className="text-accent">Theme:</span> <span className="text-muted-foreground">Matrix Green 🟢</span></p>
-          <div className="flex gap-1 mt-2">
-            {["bg-red-500", "bg-yellow-500", "bg-green-500", "bg-cyan-500", "bg-blue-500", "bg-purple-500"].map((color, i) => (
+          <p><span className="text-accent">Theme:</span> <span className="text-muted-foreground">Silver</span></p>
+          {/* <div className="flex gap-1 mt-2">
+            {["bg-silver-500", "bg-gray-500", "bg-black-500", "bg-white-500"].map((color, i) => (
               <div key={i} className={`w-4 h-4 rounded ${color}`}></div>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
@@ -305,9 +305,9 @@ function App() {
     } else if (cmd === "theme") {
       output = (
         <div className="py-2 fade-in">
-          <p className="text-accent mb-2">Current theme: Matrix Green</p>
+          <p className="text-accent mb-2">Current theme: Silver</p>
           <p className="text-muted-foreground text-sm">
-            Theme switching coming soon!🟢
+            Theme switching coming soon!
           </p>
         </div>
       )
