@@ -6,75 +6,55 @@
   :root {
     --background: 220 20% 4%;
     --foreground: 60 10% 90%;
-
     --terminal-background: 220 25% 6%;
     --terminal-header: 220 20% 10%;
-
     --card: 220 20% 8%;
     --card-foreground: 60 10% 90%;
-
     --popover: 220 20% 8%;
     --popover-foreground: 60 10% 90%;
-
     --primary: 220 15% 15%;
     --primary-foreground: 60 10% 95%;
-
     --secondary: 220 15% 12%;
     --secondary-foreground: 60 10% 90%;
-
     --muted: 220 15% 15%;
     --muted-foreground: 220 10% 55%;
-
     /* Vibrant accent colors */
-    --accent: 142 70% 45%;
-    --accent-foreground: 0 0% 98%;
-
+    --accent: 220 15% 70%;
+    --accent-foreground: 220 20% 10%;
     --accent-cyan: 180 100% 50%;
     --accent-purple: 270 80% 60%;
     --accent-amber: 45 100% 55%;
-    --accent-pink: 330 80% 60%;
-
+    --accent-pink: 330 70% 75%;
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 98%;
-
     --border: 220 15% 18%;
     --input: 220 15% 18%;
-    --ring: 142 70% 45%;
-
+    --ring: 220 15% 70%;
     --radius: 0.5rem;
   }
 
   .dark {
     --background: 220 20% 4%;
     --foreground: 60 10% 90%;
-
     --terminal-background: 220 25% 6%;
     --terminal-header: 220 20% 10%;
-
     --card: 220 20% 8%;
     --card-foreground: 60 10% 90%;
-
     --popover: 220 20% 8%;
     --popover-foreground: 60 10% 90%;
-
     --primary: 220 15% 15%;
     --primary-foreground: 60 10% 95%;
-
     --secondary: 220 15% 12%;
     --secondary-foreground: 60 10% 90%;
-
     --muted: 220 15% 15%;
     --muted-foreground: 220 10% 55%;
-
-    --accent: 142 70% 45%;
-    --accent-foreground: 0 0% 98%;
-
+    --accent: 220 15% 70%;
+    --accent-foreground: 220 20% 10%;
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 98%;
-
     --border: 220 15% 18%;
     --input: 220 15% 18%;
-    --ring: 142 70% 45%;
+    --ring: 220 15% 70%;
   }
 }
 
@@ -163,10 +143,9 @@ body {
 
 /* Terminal glow effect */
 .terminal-glow {
-  box-shadow:
-    0 0 30px rgba(74, 222, 128, 0.15),
-    0 0 60px rgba(74, 222, 128, 0.05),
-    inset 0 0 80px rgba(74, 222, 128, 0.02);
+  box-shadow: 0 0 30px rgba(180, 188, 201, 0.15),
+    0 0 60px rgba(180, 188, 201, 0.08),
+    inset 0 0 80px rgba(180, 188, 201, 0.03);
 }
 
 /* Text glow for accent elements */
@@ -286,27 +265,19 @@ body {
 
   0%,
   100% {
-    text-shadow:
-      -2px 0 hsl(var(--accent-cyan)),
-      2px 0 hsl(var(--accent-pink));
+    text-shadow: -2px 0 hsl(var(--accent-cyan)), 2px 0 hsl(var(--accent-pink));
   }
 
   25% {
-    text-shadow:
-      2px 0 hsl(var(--accent-cyan)),
-      -2px 0 hsl(var(--accent-pink));
+    text-shadow: 2px 0 hsl(var(--accent-cyan)), -2px 0 hsl(var(--accent-pink));
   }
 
   50% {
-    text-shadow:
-      -1px 0 hsl(var(--accent-cyan)),
-      1px 0 hsl(var(--accent-pink));
+    text-shadow: -1px 0 hsl(var(--accent-cyan)), 1px 0 hsl(var(--accent-pink));
   }
 
   75% {
-    text-shadow:
-      1px 0 hsl(var(--accent-cyan)),
-      -1px 0 hsl(var(--accent-pink));
+    text-shadow: 1px 0 hsl(var(--accent-cyan)), -1px 0 hsl(var(--accent-pink));
   }
 }
 
