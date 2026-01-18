@@ -1,5 +1,5 @@
 import type React from "react"
-import { Terminal, User, Briefcase, GraduationCap, Code, FolderGit2, Mail, HelpCircle, Users } from "lucide-react"
+import { Terminal, User, Briefcase, GraduationCap, Code, FolderGit2, Mail, HelpCircle, Users, Book } from "lucide-react"
 
 interface OptionsPanelProps {
   onOptionClick: (section: string) => void
@@ -14,6 +14,7 @@ const OptionsPanel: React.FC<OptionsPanelProps> = ({ onOptionClick, activeSectio
     { id: "projects", label: "Projects", icon: FolderGit2, color: "text-purple-400" },
     { id: "education", label: "Education", icon: GraduationCap, color: "text-pink-400" },
     { id: "leadership", label: "Leadership & Involvement", icon: Users, color: "text-red-400" },
+    // { id: "Blog", label: "Blog", icon: Book, color: "text-blue-400" },
   ]
 
   const utilityOptions = [
