@@ -36,6 +36,14 @@ const getEducation = async () => {
   return data;
 };
 
+const getLeadership = async () => {
+  const { data, error } = await supabase.from("college_involvement").select("*");
+  if (error) {
+    console.error("error in college involvement", error);
+  }
+  return data;
+};
+
 // ============ Utility Functions ============
 
 const displayMonth = (date: string) => {
@@ -331,7 +339,33 @@ export const sections: Record<string, () => Promise<React.ReactNode>> = {
       </div>
     );
   },
-
+  leadership: async () => {
+    const data = await getLeadership();
+    return (
+      <div className="py-2 fade-in">
+        <h2 className="text-lg font-bold text-accent mb-4 flex items-center gap-2">
+          <span className="text-glow-subtle"></span> Leadership & Involvement
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {data?.map((leadership, index) => (
+            <div
+              key={leadership.id || index}
+              className="project-card stagger-item"
+              style={{ animationDelay: `${0 * 0.1}s` }}
+            >
+              <div className="flex flex-wrap justify-between items-start gap-2 mb-2">
+                <h3 className="font-bold text-primary-foreground">{leadership.title}</h3>
+                <span className="text-xs px-2 py-1 rounded bg-secondary text-accent border border-border">
+                  {extractYear(leadership.join_date)} - {extractYear(leadership.end_date) || "Present"}
+                </span>
+              </div>
+              <p className="text-muted-foreground text-sm">{leadership.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  },
   contact: async () => {
     const socials = [
       {
