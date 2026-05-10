@@ -1,32 +1,7 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ExternalLink, Github } from 'lucide-react'
-
-const featuredProjects = [
-  {
-    id: 1,
-    title: 'Project One',
-    description: 'Built with React, TypeScript & Tailwind',
-    techs: ['React', 'TypeScript', 'Tailwind'],
-    liveUrl: '#',
-    githubUrl: '#',
-  },
-  {
-    id: 2,
-    title: 'Project Two',
-    description: 'Full-stack application with API',
-    techs: ['Node.js', 'PostgreSQL', 'React'],
-    liveUrl: '#',
-    githubUrl: '#',
-  },
-  {
-    id: 3,
-    title: 'Project Three',
-    description: 'Real-time features and animations',
-    techs: ['Next.js', 'Supabase', 'Framer'],
-    liveUrl: '#',
-    githubUrl: '#',
-  },
-]
+import { projectsData } from '../../data/sections'
 
 export default function FeaturedProjects() {
   return (
@@ -37,11 +12,11 @@ export default function FeaturedProjects() {
       className="p-4 border-b border-border"
     >
       <h3 className="text-xs font-bold text-accent uppercase tracking-wider mb-3">Featured Projects</h3>
-      
+
       <div className="space-y-3">
-        {featuredProjects.map((project, index) => (
+        {projectsData.map((project, index) => (
           <motion.div
-            key={project.id}
+            key={project.name}
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.4 + index * 0.1, duration: 0.3 }}
@@ -49,24 +24,28 @@ export default function FeaturedProjects() {
           >
             <div className="flex items-start justify-between gap-2 mb-2">
               <h4 className="text-sm font-mono text-accent group-hover:text-accent-cyan transition-colors">
-                {project.title}
+                {project.name}
               </h4>
               <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                <a href={project.liveUrl} className="p-1 hover:bg-secondary rounded">
-                  <ExternalLink size={12} className="text-muted-foreground" />
-                </a>
-                <a href={project.githubUrl} className="p-1 hover:bg-secondary rounded">
-                  <Github size={12} className="text-muted-foreground" />
-                </a>
+                {project.live && (
+                  <a href={project.live} target="_blank" rel="noopener noreferrer" className="p-1 hover:bg-secondary rounded">
+                    <ExternalLink size={12} className="text-muted-foreground" />
+                  </a>
+                )}
+                {project.github && (
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="p-1 hover:bg-secondary rounded">
+                    <Github size={12} className="text-muted-foreground" />
+                  </a>
+                )}
               </div>
             </div>
-            
+
             <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
               {project.description}
             </p>
-            
+
             <div className="flex flex-wrap gap-1">
-              {project.techs.map((tech) => (
+              {project.tech.map((tech) => (
                 <span
                   key={tech}
                   className="px-2 py-0.5 rounded text-xs bg-secondary text-muted-foreground border border-border/50"
