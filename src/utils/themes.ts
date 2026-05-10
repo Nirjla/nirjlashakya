@@ -4,6 +4,42 @@
  */
 
 export const THEMES = {
+  minimalist: {
+    name: 'Minimalist',
+    description: 'Clean, monochrome aesthetic',
+    cssVariables: {
+      '--background': '0 0% 100%',
+      '--foreground': '0 0% 15%',
+      '--terminal-background': '0 0% 98%',
+      '--terminal-header': '0 0% 95%',
+      '--accent': '0 0% 40%',
+      '--accent-cyan': '0 0% 40%',
+      '--accent-purple': '0 0% 40%',
+      '--border': '0 0% 85%',
+      '--primary-foreground': '0 0% 10%',
+      '--muted-foreground': '0 0% 45%',
+      '--secondary': '0 0% 95%',
+      '--secondary-foreground': '0 0% 20%',
+    },
+  },
+  'minimalist-dark': {
+    name: 'Minimalist Dark',
+    description: 'Clean, dark monochrome aesthetic',
+    cssVariables: {
+      '--background': '0 0% 6%',
+      '--foreground': '0 0% 85%',
+      '--terminal-background': '0 0% 8%',
+      '--terminal-header': '0 0% 11%',
+      '--accent': '0 0% 70%',
+      '--accent-cyan': '0 0% 70%',
+      '--accent-purple': '0 0% 70%',
+      '--border': '0 0% 18%',
+      '--primary-foreground': '0 0% 90%',
+      '--muted-foreground': '0 0% 55%',
+      '--secondary': '0 0% 13%',
+      '--secondary-foreground': '0 0% 85%',
+    },
+  },
   silver: {
     name: 'Silver',
     description: 'Classic silver terminal theme',

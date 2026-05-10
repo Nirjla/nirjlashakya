@@ -25,7 +25,7 @@ export default function QuickStats() {
       className="p-5 space-y-5"
     >
       {/* Stats Grid */}
-      <div className="grid grid-cols-3 gap-2">
+      {/* <div className="grid grid-cols-3 gap-2">
         {stats.map((stat) => {
           const Icon = stat.icon
           return (
@@ -39,7 +39,7 @@ export default function QuickStats() {
             </div>
           )
         })}
-      </div>
+      </div> */}
 
       {/* Tech Stack */}
       <div>

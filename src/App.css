@@ -4,59 +4,62 @@
 
 @layer base {
   :root {
-    --background: 220 20% 4%;
-    --foreground: 60 10% 90%;
-    --terminal-background: 220 25% 6%;
-    --terminal-header: 220 20% 10%;
-    --card: 220 20% 8%;
-    --card-foreground: 60 10% 90%;
-    --popover: 220 20% 8%;
-    --popover-foreground: 60 10% 90%;
-    --primary: 220 15% 15%;
-    --primary-foreground: 60 10% 95%;
-    --secondary: 220 15% 12%;
-    --secondary-foreground: 60 10% 90%;
-    --muted: 220 15% 15%;
-    --muted-foreground: 220 10% 55%;
-    /* Vibrant accent colors */
-    --accent: 220 15% 70%;
-    --accent-foreground: 220 20% 10%;
-    --accent-cyan: 180 100% 50%;
-    --accent-purple: 270 80% 60%;
-    --accent-amber: 45 100% 55%;
-    --accent-pink: 330 70% 75%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 15%;
+    --terminal-background: 0 0% 98%;
+    --terminal-header: 0 0% 95%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 15%;
+    --popover: 0 0% 98%;
+    --popover-foreground: 0 0% 15%;
+    --primary: 0 0% 90%;
+    --primary-foreground: 0 0% 15%;
+    --secondary: 0 0% 95%;
+    --secondary-foreground: 0 0% 20%;
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 40%;
+    --accent-foreground: 0 0% 95%;
+    --accent-cyan: 0 0% 40%;
+    --accent-purple: 0 0% 40%;
+    --accent-amber: 0 0% 40%;
+    --accent-pink: 0 0% 40%;
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 220 15% 70%;
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
+    --ring: 0 0% 40%;
     --radius: 0.5rem;
     --terminal-font-size: 14px;
     --animation-duration: auto;
   }
 
   .dark {
-    --background: 220 20% 4%;
-    --foreground: 60 10% 90%;
-    --terminal-background: 220 25% 6%;
-    --terminal-header: 220 20% 10%;
-    --card: 220 20% 8%;
-    --card-foreground: 60 10% 90%;
-    --popover: 220 20% 8%;
-    --popover-foreground: 60 10% 90%;
-    --primary: 220 15% 15%;
-    --primary-foreground: 60 10% 95%;
-    --secondary: 220 15% 12%;
-    --secondary-foreground: 60 10% 90%;
-    --muted: 220 15% 15%;
-    --muted-foreground: 220 10% 55%;
-    --accent: 220 15% 70%;
-    --accent-foreground: 220 20% 10%;
+    --background: 0 0% 6%;
+    --foreground: 0 0% 85%;
+    --terminal-background: 0 0% 8%;
+    --terminal-header: 0 0% 11%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 85%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 85%;
+    --primary: 0 0% 15%;
+    --primary-foreground: 0 0% 95%;
+    --secondary: 0 0% 13%;
+    --secondary-foreground: 0 0% 85%;
+    --muted: 0 0% 13%;
+    --muted-foreground: 0 0% 55%;
+    --accent: 0 0% 70%;
+    --accent-foreground: 0 0% 10%;
+    --accent-cyan: 0 0% 70%;
+    --accent-purple: 0 0% 70%;
+    --accent-amber: 0 0% 70%;
+    --accent-pink: 0 0% 70%;
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 220 15% 70%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 0 0% 70%;
   }
 }
 
@@ -233,17 +236,49 @@ body {
 }
 
 /* Fallback for elements without CSS variables */
-.stagger-item:nth-child(1) { animation-delay: 0.05s; }
-.stagger-item:nth-child(2) { animation-delay: 0.1s; }
-.stagger-item:nth-child(3) { animation-delay: 0.15s; }
-.stagger-item:nth-child(4) { animation-delay: 0.2s; }
-.stagger-item:nth-child(5) { animation-delay: 0.25s; }
-.stagger-item:nth-child(6) { animation-delay: 0.3s; }
-.stagger-item:nth-child(7) { animation-delay: 0.35s; }
-.stagger-item:nth-child(8) { animation-delay: 0.4s; }
-.stagger-item:nth-child(9) { animation-delay: 0.45s; }
-.stagger-item:nth-child(10) { animation-delay: 0.5s; }
-.stagger-item:nth-child(n+11) { animation-delay: 0.55s; }
+.stagger-item:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.stagger-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.stagger-item:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.stagger-item:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.stagger-item:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.stagger-item:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+.stagger-item:nth-child(7) {
+  animation-delay: 0.35s;
+}
+
+.stagger-item:nth-child(8) {
+  animation-delay: 0.4s;
+}
+
+.stagger-item:nth-child(9) {
+  animation-delay: 0.45s;
+}
+
+.stagger-item:nth-child(10) {
+  animation-delay: 0.5s;
+}
+
+.stagger-item:nth-child(n+11) {
+  animation-delay: 0.55s;
+}
 
 /* Glitch effect for ASCII art */
 @keyframes glitch {
@@ -310,8 +345,9 @@ body {
 }
 
 /* Focus styles */
-input:focus {
-  outline: none;
+input:focus,
+input:focus-visible {
+  outline: none !important;
   caret-color: hsl(var(--accent));
 }
 
@@ -372,13 +408,9 @@ button:focus-visible {
   outline-color: hsl(var(--accent));
 }
 
-input:focus-visible {
-  @apply outline-2 outline-offset-1;
-  outline-color: hsl(var(--accent));
-}
-
 /* Performance optimizations */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -433,6 +465,7 @@ img {
 
 /* Reduce bandwidth for animations on slow connections */
 @media (prefers-reduced-data: reduce) {
+
   *,
   *::before,
   *::after {
@@ -444,12 +477,14 @@ img {
 /* Minimal Terminal Design */
 
 /* Smooth transitions for all interactive elements */
-button, a, [role="button"] {
+button,
+a,
+[role="button"] {
   transition: color 0.2s ease-out, border-color 0.2s ease-out;
 }
 
 /* Focus indication without glow */
-button:focus-visible, input:focus-visible {
+button:focus-visible {
   outline: 2px solid hsl(var(--accent-cyan));
   outline-offset: 2px;
 }

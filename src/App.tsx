@@ -2,11 +2,9 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import { AnimatePresence } from "framer-motion"
 import { Mail, Linkedin, Github, Coffee } from "lucide-react"
 import Terminal from "./components/Terminal"
-import MatrixRain from "./components/MatrixRain"
 import BootScreen from "./components/BootScreen"
 import Workspace from "./components/Workspace"
 import Dock, { getDockItems } from "./components/Dock"
-import SettingsPanel from "./components/SettingsPanel"
 import { sections } from "./data/sections"
 import { applyTheme } from "./utils/themes"
 import "./App.css"
@@ -41,9 +39,6 @@ const AVAILABLE_COMMANDS = [
   "echo",
   "sudo hire me",
   "coffee",
-  "matrix",
-  "theme",
-  "settings",
   "history",
   "shortcuts",
   "exit"
@@ -80,7 +75,6 @@ function App() {
   })
   const [historyIndex, setHistoryIndex] = useState(-1)
   const [suggestions, setSuggestions] = useState<string[]>([])
-  const [showMatrix, setShowMatrix] = useState(true)
   const [isInitialized, setIsInitialized] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
 
@@ -113,9 +107,9 @@ function App() {
         <p className="text-primary-foreground text-lg">
           Welcome to my terminal portfolio!
         </p>
-        <p className="text-muted-foreground">
-          I'm <span className="text-accent font-semibold">Nirjla Shakya</span>, a Software Engineer passionate about building amazing web experiences.
-        </p>
+        {/* <p className="text-muted-foreground">
+          I'm <span className="text-accent font-semibold">Nirjla Shakya</span>, a Software Engineer.
+        </p> */}
         <p className="text-muted-foreground mt-3">
           Type <span className="text-accent font-mono bg-secondary px-2 py-0.5 rounded">help</span> to see available commands, or click the navigation panel.
         </p>
@@ -157,16 +151,10 @@ function App() {
           <p><span className="text-accent">OS:</span> <span className="text-muted-foreground">Human 1.0</span></p>
           <p><span className="text-accent">Host:</span> <span className="text-muted-foreground">Kathmandu, Nepal</span></p>
           <p><span className="text-accent">Kernel:</span> <span className="text-muted-foreground">Creative Mind v2.0</span></p>
-          <p><span className="text-accent">Uptime:</span> <span className="text-muted-foreground">1+ years in tech</span></p>
+          <p><span className="text-accent">Uptime:</span> <span className="text-muted-foreground">2 years in tech</span></p>
           <p><span className="text-accent">Shell:</span> <span className="text-muted-foreground">zsh/bash enthusiast</span></p>
           <p><span className="text-accent">Languages:</span> <span className="text-muted-foreground">JS, TS</span></p>
           <p><span className="text-accent">IDE:</span> <span className="text-muted-foreground">VS Code / Cursor</span></p>
-          <p><span className="text-accent">Theme:</span> <span className="text-muted-foreground">Silver</span></p>
-          {/* <div className="flex gap-1 mt-2">
-            {["bg-silver-500", "bg-gray-500", "bg-black-500", "bg-white-500"].map((color, i) => (
-              <div key={i} className={`w-4 h-4 rounded ${color}`}></div>
-            ))}
-          </div> */}
         </div>
       </div>
     </div>
@@ -204,9 +192,6 @@ function App() {
             { cmd: "history", desc: "Command history" },
             { cmd: "date", desc: "Current date" },
             { cmd: "shortcuts", desc: "Keyboard bindings" },
-            { cmd: "matrix", desc: "Toggle matrix rain" },
-            { cmd: "settings", desc: "Customize terminal" },
-            { cmd: "theme", desc: "Change theme" },
           ].map(({ cmd, desc }) => (
             <p key={cmd} className="stagger-item">
               <span className="text-accent font-mono">{cmd}</span>
@@ -415,23 +400,6 @@ function App() {
           )}
         </div>
       )
-    } else if (cmd === "matrix") {
-      setShowMatrix(prev => !prev)
-      output = (
-        <p className="text-accent py-2 fade-in">
-          Matrix rain {showMatrix ? "disabled" : "enabled"}
-        </p>
-      )
-    } else if (cmd === "theme" || cmd === "settings") {
-      setShowSettings(true)
-      output = (
-        <div className="py-2 fade-in">
-          <p className="text-accent mb-2">Opening Settings Panel...</p>
-          <p className="text-muted-foreground text-sm">
-            Use the settings panel on the right to customize your terminal experience!
-          </p>
-        </div>
-      )
     } else if (cmd === "shortcuts") {
       output = getShortcutsOutput()
     } else if (easterEggs[cmd]) {
@@ -455,7 +423,7 @@ function App() {
         terminalRef.current.scrollTop = terminalRef.current.scrollHeight
       }
     }, 50)
-  }, [commandHistory, showMatrix])
+  }, [commandHistory])
 
   const handleCommandChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
@@ -550,10 +518,8 @@ function App() {
 
       <Workspace
         showRightPanel={true}
-        onSettingsClick={() => setShowSettings(true)}
       >
-        {showMatrix && <MatrixRain />}
-        
+
         <div className="flex flex-col h-full relative z-10">
           <Terminal
             ref={terminalRef}
@@ -568,8 +534,6 @@ function App() {
           />
         </div>
       </Workspace>
-
-      <SettingsPanel isOpen={showSettings} onClose={() => setShowSettings(false)} />
 
       {!showBoot && (
         <>

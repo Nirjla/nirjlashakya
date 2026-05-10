@@ -29,11 +29,10 @@ export default function Dock({ items }: DockProps) {
               key={item.id}
               whileTap={{ scale: 0.95 }}
               onClick={item.onClick}
-              className={`px-3 py-2 rounded transition-colors flex items-center justify-center ${
-                item.isActive
-                  ? 'bg-secondary text-accent-cyan'
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
+              className={`px-3 py-2 rounded transition-colors flex items-center justify-center ${item.isActive
+                ? 'bg-secondary text-accent-cyan'
+                : 'text-muted-foreground hover:text-foreground'
+                }`}
               title={item.label}
               aria-label={item.label}
             >
@@ -46,17 +45,16 @@ export default function Dock({ items }: DockProps) {
       </motion.div>
 
       {/* Mobile: Items list for drawer */}
-      <div className="sm:hidden space-y-2 px-4 py-4">
+      <div className="sm:hidden space-y-1 px-3 py-2">
         {items.map((item) => (
           <motion.button
             key={item.id}
             whileTap={{ scale: 0.98 }}
             onClick={item.onClick}
-            className={`w-full px-4 py-3 rounded transition-colors flex items-center gap-3 border font-mono text-sm ${
-              item.isActive
-                ? 'bg-secondary text-accent-cyan border-border'
-                : 'bg-transparent text-muted-foreground hover:text-foreground border-border'
-            }`}
+            className={`w-full px-3 py-2.5 rounded transition-colors flex items-center gap-3 border font-mono text-sm ${item.isActive
+              ? 'bg-secondary text-accent-cyan border-border'
+              : 'bg-transparent text-muted-foreground hover:text-foreground border-border'
+              }`}
             title={item.label}
             aria-label={item.label}
           >
@@ -80,7 +78,6 @@ export function getDockItems(onItemClick: (command: string) => void): DockItem[]
     { id: 'skills', label: 'Skills', icon: <Code2 size={18} />, onClick: () => onItemClick('skills') },
     { id: 'projects', label: 'Projects', icon: <BookOpen size={18} />, onClick: () => onItemClick('projects') },
     { id: 'contact', label: 'Contact', icon: <Mail size={18} />, onClick: () => onItemClick('contact') },
-    { id: 'help', label: 'Help', icon: <HelpCircle size={18} />, onClick: () => onItemClick('help') },
-    { id: 'settings', label: 'Settings', icon: <Settings size={18} />, onClick: () => onItemClick('settings') },
+    { id: 'help', label: 'Help', icon: <HelpCircle size={18} />, onClick: () => onItemClick('help') }
   ]
 }

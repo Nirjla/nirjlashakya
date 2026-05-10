@@ -3,13 +3,11 @@ import { motion } from 'framer-motion'
 interface NavbarProps {
   title?: string
   showControls?: boolean
-  onSettingsClick?: () => void
 }
 
 export default function Navbar({
   title = 'Nirjla Workstation',
   showControls = true,
-  onSettingsClick,
 }: NavbarProps) {
   return (
     <motion.div

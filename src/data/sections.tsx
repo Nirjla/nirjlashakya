@@ -66,6 +66,27 @@ const extractYear = (date: string, requireMonth: boolean = false) => {
 
 // ============ Section Renderers ============
 
+export const projectsData = [
+  {
+    name: "Terminal Portfolio",
+    description: "Interactive terminal-style portfolio website built with React and TypeScript",
+    tech: ["React", "TypeScript", "Tailwind CSS", "Supabase"],
+    github: "https://github.com/nirjla/nirjlashakya",
+    live: "https://nirjalashakya.com.np",
+    // stars: 5,
+    // forks: 2
+  },
+  {
+    name: "Node.js Repo Insights",
+    description: "A tool to get insights about a node.js repository",
+    tech: ["Node.js", "Express", "Flask", "Tailwind CSS", "PostgreSQL", "Typescript", "Python", "ML"],
+    github: "https://github.com/nirjla/repo-insights",
+    // live: "https://nodejs-repo-insights.vercel.app/",
+    // stars: 5,
+    // forks: 2
+  }
+];
+
 export const sections: Record<string, () => Promise<React.ReactNode>> = {
   about: async () => {
     const data = await getAboutMe();
@@ -228,26 +249,7 @@ export const sections: Record<string, () => Promise<React.ReactNode>> = {
 
   projects: async () => {
     // Sample projects - you can later move this to Supabase
-    const projects = [
-      {
-        name: "Terminal Portfolio",
-        description: "Interactive terminal-style portfolio website built with React and TypeScript",
-        tech: ["React", "TypeScript", "Tailwind CSS", "Supabase"],
-        github: "https://github.com/nirjla/nirjlashakya",
-        live: "https://nirjalashakya.com.np",
-        // stars: 5,
-        // forks: 2
-      },
-      {
-        name: "Node.js Repo Insights",
-        description: "A tool to get insights about a node.js repository",
-        tech: ["Node.js", "Express", "Flask", "Tailwind CSS", "PostgreSQL", "Typescript", "Python", "ML"],
-        github: "https://github.com/nirjla/repo-insights",
-        // live: "https://nodejs-repo-insights.vercel.app/",
-        // stars: 5,
-        // forks: 2
-      }
-    ];
+    const projects = projectsData;
 
     return (
       <div className="py-2 fade-in">
