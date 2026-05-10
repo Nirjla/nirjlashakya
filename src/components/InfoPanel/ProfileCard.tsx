@@ -9,11 +9,15 @@ export default function ProfileCard() {
       transition={{ delay: 0.2, duration: 0.4 }}
       className="p-4 border-b border-border"
     >
-      {/* Profile Avatar Placeholder */}
+      {/* Profile Avatar - Logo */}
       <div className="flex justify-center mb-4">
         <div className="w-24 h-24 rounded-full bg-gradient-to-br from-accent-cyan to-accent-purple p-1">
-          <div className="w-full h-full rounded-full bg-terminal-background flex items-center justify-center text-2xl font-bold text-accent">
-            NS
+          <div className="w-full h-full rounded-full bg-terminal-background flex items-center justify-center overflow-hidden">
+            <img 
+              src="/nirjla_terminal.png" 
+              alt="Nirjla Shakya Logo" 
+              className="w-full h-full object-cover rounded-full"
+            />
           </div>
         </div>
       </div>
@@ -39,12 +43,9 @@ export default function ProfileCard() {
         Crafting elegant web experiences with modern tech stack. Passionate about performance and user experience.
       </p>
 
-      {/* CTA Buttons */}
-      <div className="flex gap-2 mb-4">
-        <button className="flex-1 px-3 py-2 rounded bg-accent text-accent-foreground text-xs font-mono hover:bg-accent/90 transition-colors">
-          Resume
-        </button>
-        <button className="flex-1 px-3 py-2 rounded border border-border text-foreground text-xs font-mono hover:bg-secondary transition-colors">
+      {/* CTA Button */}
+      <div className="mb-4">
+        <button className="w-full px-3 py-2 rounded bg-accent text-accent-foreground text-xs font-mono hover:bg-accent/90 transition-colors">
           Contact
         </button>
       </div>

@@ -10,7 +10,7 @@ interface SettingsPanelProps {
 }
 
 export default function SettingsPanel({ isOpen, onClose }: SettingsPanelProps) {
-  const { settings, updateTheme, updateFontSize, toggleAnimations, resetSettings } = useSettings()
+  const { settings, updateTheme, updateFontSize, resetSettings } = useSettings()
   const [expandedSection, setExpandedSection] = useState<string | null>('theme')
 
   const themes = getAllThemes()
@@ -125,51 +125,6 @@ export default function SettingsPanel({ isOpen, onClose }: SettingsPanelProps) {
                     </div>
                     <p className="text-xs text-muted-foreground/60 mt-2">
                       Preview: <span style={{ fontSize: `${settings.fontSize}px` }}>Terminal text</span>
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Animations Section */}
-              <div className="border border-border rounded-lg overflow-hidden">
-                <button
-                  onClick={() => toggleSection('animations')}
-                  className="w-full px-4 py-3 bg-secondary hover:bg-secondary/80 transition-colors flex items-center justify-between text-foreground font-semibold"
-                >
-                  <span>Animations</span>
-                  <ChevronDown
-                    size={18}
-                    className={`transition-transform ${expandedSection === 'animations' ? 'rotate-180' : ''}`}
-                  />
-                </button>
-
-                {expandedSection === 'animations' && (
-                  <div className="p-4 bg-background/50 border-t border-border/50">
-                    <div className="flex items-center justify-between mb-3">
-                      <label className="text-sm text-foreground">
-                        {settings.animationsEnabled ? 'Enabled' : 'Disabled'}
-                      </label>
-                      <button
-                        onClick={toggleAnimations}
-                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                          settings.animationsEnabled ? 'bg-accent/30' : 'bg-secondary'
-                        }`}
-                      >
-                        <motion.span
-                          layout
-                          className={`inline-block h-4 w-4 transform rounded-full ${
-                            settings.animationsEnabled ? 'bg-accent' : 'bg-muted-foreground'
-                          }`}
-                          style={{
-                            marginLeft: settings.animationsEnabled ? '18px' : '2px',
-                          }}
-                        />
-                      </button>
-                    </div>
-                    <p className="text-xs text-muted-foreground">
-                      {settings.animationsEnabled
-                        ? 'Smooth transitions and animations are enabled'
-                        : 'Animations are disabled for reduced motion'}
                     </p>
                   </div>
                 )}

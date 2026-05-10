@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Code2, Zap, Users } from 'lucide-react'
+import { Code2, Zap, Users, Mail } from 'lucide-react'
 
 const stats = [
   { label: 'Projects', value: '12+', icon: Code2 },
@@ -64,14 +64,13 @@ export default function QuickStats() {
 
       {/* Quick Links */}
       <div className="pt-2 border-t border-border">
-        <div className="space-y-1.5">
-          <button className="w-full px-3 py-1.5 rounded text-xs text-center hover:bg-secondary transition-colors border border-border text-muted-foreground hover:text-foreground">
-            View Resume
-          </button>
-          <button className="w-full px-3 py-1.5 rounded text-xs text-center hover:bg-secondary transition-colors border border-border text-muted-foreground hover:text-foreground">
-            Schedule Call
-          </button>
-        </div>
+        <a
+          href="mailto:shakyanirjala6@gmail.com"
+          className="flex items-center justify-center gap-2 w-full px-3 py-2 rounded text-xs hover:bg-secondary transition-colors border border-border text-muted-foreground hover:text-accent"
+        >
+          <Mail size={14} />
+          Send Email
+        </a>
       </div>
     </motion.div>
   )

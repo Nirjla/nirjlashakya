@@ -1,24 +1,15 @@
 import { motion } from 'framer-motion'
-import { Minimize2, Maximize2, X, Settings } from 'lucide-react'
 
 interface NavbarProps {
   title?: string
   showControls?: boolean
   onSettingsClick?: () => void
-  windowState?: 'normal' | 'minimized' | 'maximized'
-  onMinimize?: () => void
-  onMaximize?: () => void
-  onClose?: () => void
 }
 
 export default function Navbar({
   title = 'Nirjla Workstation',
   showControls = true,
   onSettingsClick,
-  windowState = 'normal',
-  onMinimize,
-  onMaximize,
-  onClose,
 }: NavbarProps) {
   return (
     <motion.div
@@ -47,56 +38,7 @@ export default function Navbar({
         </div>
       </div>
 
-      {/* Right side - Settings and Window controls */}
-      <div className="flex items-center gap-1 flex-shrink-0">
-        {onSettingsClick && (
-          <button
-            onClick={onSettingsClick}
-            aria-label="Settings"
-            className="p-1 rounded transition-colors text-muted-foreground hover:text-foreground hover:bg-secondary hover:text-accent min-h-8 min-w-8 flex items-center justify-center"
-            title="Open settings"
-          >
-            <Settings size={16} />
-          </button>
-        )}
-      </div>
 
-      {showControls && (
-        <div className="flex items-center gap-1 flex-shrink-0">
-          <button
-            onClick={onMinimize}
-            aria-label={windowState === 'minimized' ? 'Restore' : 'Minimize'}
-            className={`p-1 rounded transition-colors min-h-8 min-w-8 flex items-center justify-center ${
-              windowState === 'minimized'
-                ? 'bg-accent/20 text-accent'
-                : 'text-muted-foreground hover:text-foreground hover:bg-secondary hover:text-accent'
-            }`}
-            title={windowState === 'minimized' ? 'Restore window' : 'Minimize window'}
-          >
-            <Minimize2 size={16} />
-          </button>
-          <button
-            onClick={onMaximize}
-            aria-label={windowState === 'maximized' ? 'Restore' : 'Maximize'}
-            className={`p-1 rounded transition-colors min-h-8 min-w-8 flex items-center justify-center ${
-              windowState === 'maximized'
-                ? 'bg-accent/20 text-accent'
-                : 'text-muted-foreground hover:text-foreground hover:bg-secondary hover:text-accent'
-            }`}
-            title={windowState === 'maximized' ? 'Restore window' : 'Maximize window'}
-          >
-            <Maximize2 size={16} />
-          </button>
-          <button
-            onClick={onClose}
-            aria-label="Close"
-            className="p-1 rounded transition-colors text-muted-foreground hover:text-destructive hover:bg-destructive/20 min-h-8 min-w-8 flex items-center justify-center"
-            title="Close/Reset terminal"
-          >
-            <X size={16} />
-          </button>
-        </div>
-      )}
     </motion.div>
   )
 }

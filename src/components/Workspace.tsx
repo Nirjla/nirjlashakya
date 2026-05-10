@@ -7,20 +7,12 @@ import InfoPanel from './InfoPanel/InfoPanel'
 interface WorkspaceProps {
   children: ReactNode
   showRightPanel?: boolean
-  windowState?: 'normal' | 'minimized' | 'maximized'
-  onMinimize?: () => void
-  onMaximize?: () => void
-  onClose?: () => void
   onSettingsClick?: () => void
 }
 
 export default function Workspace({
   children,
   showRightPanel = true,
-  windowState = 'normal',
-  onMinimize,
-  onMaximize,
-  onClose,
   onSettingsClick,
 }: WorkspaceProps) {
   return (
@@ -32,10 +24,6 @@ export default function Workspace({
 
       {/* Navbar */}
       <Navbar
-        windowState={windowState}
-        onMinimize={onMinimize}
-        onMaximize={onMaximize}
-        onClose={onClose}
         onSettingsClick={onSettingsClick}
       />
 

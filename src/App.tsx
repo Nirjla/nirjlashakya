@@ -8,7 +8,6 @@ import Workspace from "./components/Workspace"
 import Dock, { getDockItems } from "./components/Dock"
 import SettingsPanel from "./components/SettingsPanel"
 import { sections } from "./data/sections"
-import { useWindowState } from "./hooks/useWindowState"
 import { applyTheme } from "./utils/themes"
 import "./App.css"
 import type React from "react"
@@ -87,9 +86,6 @@ function App() {
 
   const terminalRef = useRef<HTMLDivElement>(null)
   const lastCommandTimeRef = useRef<number>(0)
-  
-  // Window state for minimize/maximize/close
-  const windowState = useWindowState()
 
   // Handle boot screen completion and apply initial theme
   const handleBootComplete = () => {
@@ -546,15 +542,6 @@ function App() {
     }, 0)
   })
 
-  // Handle window close - reset terminal
-  const handleWindowClose = () => {
-    setHistory([{ command: "welcome", output: getWelcomeMessage() as React.JSX.Element }])
-    setActiveSection("")
-    setCurrentCommand("")
-    setSuggestions([])
-    windowState.reset()
-  }
-
   return (
     <>
       <AnimatePresence>
@@ -563,33 +550,22 @@ function App() {
 
       <Workspace
         showRightPanel={true}
-        windowState={windowState.state}
-        onMinimize={windowState.toggleMinimize}
-        onMaximize={windowState.toggleMaximize}
-        onClose={handleWindowClose}
         onSettingsClick={() => setShowSettings(true)}
       >
         {showMatrix && <MatrixRain />}
         
         <div className="flex flex-col h-full relative z-10">
-          {windowState.state !== 'minimized' && (
-            <Terminal
-              ref={terminalRef}
-              history={history}
-              currentCommand={currentCommand}
-              onCommandChange={handleCommandChange}
-              onCommandSubmit={handleCommandSubmit}
-              onKeyDown={handleKeyDown}
-              activeSection={activeSection}
-              suggestions={suggestions}
-              onSuggestionSelect={handleSuggestionSelect}
-            />
-          )}
-          {windowState.state === 'minimized' && (
-            <div className="flex-1 flex items-center justify-center text-muted-foreground">
-              <p>Terminal minimized - click minimize button to restore</p>
-            </div>
-          )}
+          <Terminal
+            ref={terminalRef}
+            history={history}
+            currentCommand={currentCommand}
+            onCommandChange={handleCommandChange}
+            onCommandSubmit={handleCommandSubmit}
+            onKeyDown={handleKeyDown}
+            activeSection={activeSection}
+            suggestions={suggestions}
+            onSuggestionSelect={handleSuggestionSelect}
+          />
         </div>
       </Workspace>
 
