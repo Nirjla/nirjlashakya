@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from "react"
+import { AnimatePresence } from "framer-motion"
 import Terminal from "./components/Terminal"
-import OptionsPanel from "./components/OptionsPanel"
 import MatrixRain from "./components/MatrixRain"
+import BootScreen from "./components/BootScreen"
+import Workspace from "./components/Workspace"
+import Dock, { getDockItems } from "./components/Dock"
 import { sections } from "./data/sections"
 import "./App.css"
 import type React from "react"
-import { Github, Linkedin, Mail, Coffee } from "lucide-react"
 
 // ASCII Art Banner
 const ASCII_BANNER = `
@@ -53,6 +55,13 @@ const COMMAND_METADATA: Record<string, { loadingMsg: string; icon?: string }> = 
 }
 
 function App() {
+  const [showBoot, setShowBoot] = useState(() => {
+    // Check if user has seen boot screen before
+    if (typeof window !== 'undefined') {
+      return !localStorage.getItem('bootScreenSeen')
+    }
+    return true
+  })
   const [history, setHistory] = useState<Array<{ command: string; output: React.JSX.Element | string; isLoading?: boolean; loadingMsg?: string }>>([])
   const [currentCommand, setCurrentCommand] = useState("")
   const [activeSection, setActiveSection] = useState("")
@@ -63,6 +72,12 @@ function App() {
   const [isInitialized, setIsInitialized] = useState(false)
 
   const terminalRef = useRef<HTMLDivElement>(null)
+
+  // Handle boot screen completion
+  const handleBootComplete = () => {
+    setShowBoot(false)
+    localStorage.setItem('bootScreenSeen', 'true')
+  }
 
   // Welcome message with ASCII art
   const getWelcomeMessage = (): React.ReactNode => (
@@ -462,10 +477,6 @@ function App() {
     }
   }
 
-  const handleOptionClick = (section: string) => {
-    executeCommand(section)
-  }
-
   // Focus input on mount
   useEffect(() => {
     const input = document.getElementById("command-input")
@@ -474,76 +485,40 @@ function App() {
     }
   }, [])
 
+  const dockItems = getDockItems((command) => {
+    setCurrentCommand(command)
+    // Trigger command execution
+    setTimeout(() => {
+      executeCommand(command)
+    }, 0)
+  })
+
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col p-4 md:p-8 relative overflow-hidden">
-      {/* Matrix Rain Background */}
-      {showMatrix && <MatrixRain />}
+    <>
+      <AnimatePresence>
+        {showBoot && <BootScreen onBootComplete={handleBootComplete} />}
+      </AnimatePresence>
 
-      {/* Header */}
-      <header className="mb-6 relative z-10">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-xl md:text-2xl font-mono font-bold text-primary-foreground flex items-center gap-2">
-              <span className="text-accent text-glow">❯</span>
-              nirjla@portfolio
-              <span className="text-accent animate-pulse">_</span>
-            </h1>
-          </div>
-
-          <div className="hidden md:flex items-center gap-4">
-            <a
-              href="https://github.com/nirjla"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-link text-muted-foreground hover:text-accent transition-colors"
-            >
-              <Github className="w-5 h-5" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/nirjalashakya"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-link text-muted-foreground hover:text-blue-400 transition-colors"
-            >
-              <Linkedin className="w-5 h-5" />
-            </a>
-            <a
-              href="mailto:shakyanirjala6@gmail.com"
-              className="social-link text-muted-foreground hover:text-red-400 transition-colors"
-            >
-              <Mail className="w-5 h-5" />
-            </a>
-          </div>
+      <Workspace showRightPanel={true}>
+        {showMatrix && <MatrixRain />}
+        
+        <div className="flex flex-col h-full relative z-10">
+          <Terminal
+            ref={terminalRef}
+            history={history}
+            currentCommand={currentCommand}
+            onCommandChange={handleCommandChange}
+            onCommandSubmit={handleCommandSubmit}
+            onKeyDown={handleKeyDown}
+            activeSection={activeSection}
+            suggestions={suggestions}
+            onSuggestionSelect={handleSuggestionSelect}
+          />
         </div>
-      </header>
+      </Workspace>
 
-      {/* Main Content */}
-      <div className="flex flex-col md:flex-row gap-4 flex-1 relative z-10">
-        <Terminal
-          ref={terminalRef}
-          history={history}
-          currentCommand={currentCommand}
-          onCommandChange={handleCommandChange}
-          onCommandSubmit={handleCommandSubmit}
-          onKeyDown={handleKeyDown}
-          activeSection={activeSection}
-          suggestions={suggestions}
-          onSuggestionSelect={handleSuggestionSelect}
-        />
-
-        <OptionsPanel onOptionClick={handleOptionClick} activeSection={activeSection} />
-      </div>
-
-      {/* Footer */}
-      <footer className="mt-6 text-center relative z-10">
-        <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
-          <span>By</span>
-          <span> Nirjla Shakya</span>
-          <span className="text-accent">|</span>
-          <span>© {new Date().getFullYear()}</span>
-        </p>
-      </footer>
-    </div>
+      {!showBoot && <Dock items={dockItems} />}
+    </>
   )
 }
 

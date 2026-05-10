@@ -366,3 +366,60 @@ input:focus {
   transform: translateY(-2px);
   box-shadow: 0 10px 30px -10px hsl(var(--accent) / 0.2);
 }
+
+/* Performance optimizations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scrollbar customization */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-track-transparent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thumb-border::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+}
+
+.scrollbar-thumb-muted-foreground::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
+
+/* GPU acceleration for animations */
+.will-animate {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize terminal rendering */
+.terminal-container {
+  contain: layout style paint;
+}
+
+/* Image loading optimization */
+img {
+  loading: lazy;
+}
+
+/* Reduce bandwidth for animations on slow connections */
+@media (prefers-reduced-data: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-play-state: paused !important;
+    transition: none !important;
+  }
+}

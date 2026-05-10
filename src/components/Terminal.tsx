@@ -1,6 +1,8 @@
 import type React from "react"
 import { forwardRef } from "react"
+import { motion } from "framer-motion"
 import CommandPrompt from "./CommandPrompt"
+import { commandExecuteVariants } from "../utils/animations"
 import type { JSX } from "react/jsx-runtime"
 
 interface TerminalProps {
@@ -25,7 +27,10 @@ const Terminal = forwardRef<HTMLDivElement, TerminalProps>(
     }
 
     return (
-      <div
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.4, duration: 0.5 }}
         className="flex-1 bg-terminal-background border border-border rounded-lg shadow-xl overflow-hidden flex flex-col terminal-crt terminal-glow cursor-text"
         onClick={handleTerminalClick}
       >
@@ -50,7 +55,13 @@ const Terminal = forwardRef<HTMLDivElement, TerminalProps>(
           style={{ maxHeight: "calc(100vh - 220px)" }}
         >
           {history.map((item, index) => (
-            <div key={index} className="mb-3 fade-in">
+            <motion.div
+              key={index}
+              className="mb-3"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+            >
               {/* Command line */}
               <div className="flex items-center text-primary-foreground">
                 <span className="text-accent text-glow-subtle mr-1">❯</span>
@@ -69,7 +80,7 @@ const Terminal = forwardRef<HTMLDivElement, TerminalProps>(
                   item.output
                 )}
               </div>
-            </div>
+            </motion.div>
           ))}
 
           <CommandPrompt
@@ -87,8 +98,12 @@ const Terminal = forwardRef<HTMLDivElement, TerminalProps>(
           <span>Press <kbd className="px-1 py-0.5 bg-secondary rounded text-accent">Tab</kbd> for autocomplete</span>
           <span><kbd className="px-1 py-0.5 bg-secondary rounded text-accent">↑↓</kbd> for history</span>
         </div>
-      </div>
+
+        {/* Terminal Close */}
+      </motion.div>
     )
+  }
+)
   },
 )
 
