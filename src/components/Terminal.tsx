@@ -104,8 +104,6 @@ const Terminal = forwardRef<HTMLDivElement, TerminalProps>(
     )
   }
 )
-  },
-)
 
 Terminal.displayName = "Terminal"
 
