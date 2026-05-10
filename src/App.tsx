@@ -6,6 +6,8 @@ import MatrixRain from "./components/MatrixRain"
 import BootScreen from "./components/BootScreen"
 import Workspace from "./components/Workspace"
 import Dock, { getDockItems } from "./components/Dock"
+import BottomDrawer from "./components/BottomDrawer"
+import DockToggleButton from "./components/DockToggleButton"
 import SettingsPanel from "./components/SettingsPanel"
 import { sections } from "./data/sections"
 import { applyTheme } from "./utils/themes"
@@ -83,6 +85,7 @@ function App() {
   const [showMatrix, setShowMatrix] = useState(true)
   const [isInitialized, setIsInitialized] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
+  const [showDrawer, setShowDrawer] = useState(false)
 
   const terminalRef = useRef<HTMLDivElement>(null)
   const lastCommandTimeRef = useRef<number>(0)
@@ -571,7 +574,20 @@ function App() {
 
       <SettingsPanel isOpen={showSettings} onClose={() => setShowSettings(false)} />
 
-      {!showBoot && <Dock items={dockItems} />}
+      {!showBoot && (
+        <>
+          {/* Desktop Dock - shown on small and larger screens */}
+          <Dock items={dockItems} />
+
+          {/* Mobile Toggle Button */}
+          <DockToggleButton isOpen={showDrawer} onClick={() => setShowDrawer(!showDrawer)} />
+
+          {/* Mobile Bottom Drawer */}
+          <BottomDrawer isOpen={showDrawer} onClose={() => setShowDrawer(false)} title="Navigation">
+            <Dock items={dockItems} />
+          </BottomDrawer>
+        </>
+      )}
     </>
   )
 }
