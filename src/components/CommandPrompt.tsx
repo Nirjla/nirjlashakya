@@ -112,15 +112,14 @@ const CommandPrompt: React.FC<CommandPromptProps> = ({
     : null
 
   return (
-    <form onSubmit={onCommandSubmit} className="mt-3">
-      <div className="flex items-center group">
-        <span className="text-accent text-glow-subtle mr-1">❯</span>
-        <span className="text-muted-foreground mr-2">~</span>
+    <form onSubmit={onCommandSubmit} className="mt-4">
+      <div className="flex items-center gap-2 group">
+        <span className="text-accent-cyan font-bold">$</span>
 
         <div className="flex-1 relative">
           {/* Ghost text for autocomplete suggestion */}
           {inlineSuggestion && (
-            <span className="absolute left-0 top-0 text-muted-foreground/30 pointer-events-none font-mono">
+            <span className="absolute left-0 top-1/2 -translate-y-1/2 text-muted-foreground/25 pointer-events-none font-mono text-sm">
               {inlineSuggestion}
             </span>
           )}
@@ -132,20 +131,15 @@ const CommandPrompt: React.FC<CommandPromptProps> = ({
             value={currentCommand}
             onChange={onCommandChange}
             onKeyDown={handleDropdownKeyDown}
-            className="w-full bg-transparent border-none outline-none text-primary-foreground font-mono relative z-10"
+            className="w-full bg-transparent border-none outline-none text-foreground font-mono relative z-10 placeholder-muted-foreground/20"
             autoFocus
             autoComplete="off"
             autoCapitalize="off"
             autoCorrect="off"
             spellCheck={false}
             aria-label="Command input"
-            placeholder=""
+            placeholder="type a command..."
           />
-
-          {/* Blinking cursor when empty or at end */}
-          {currentCommand.length === 0 && (
-            <span className="cursor-blink absolute left-0"></span>
-          )}
         </div>
       </div>
 
@@ -155,9 +149,9 @@ const CommandPrompt: React.FC<CommandPromptProps> = ({
           ref={dropdownRef}
           role="listbox"
           aria-label="Command suggestions"
-          className="ml-6 mt-3 bg-secondary border border-border rounded-lg overflow-hidden shadow-lg animate-in fade-in duration-100"
+          className="ml-0 mt-3 bg-terminal-background/60 backdrop-blur-sm border border-accent-cyan/30 rounded-lg overflow-hidden shadow-xl animate-in fade-in duration-200"
         >
-          <div className="divide-y divide-border/50">
+          <div className="divide-y divide-accent-cyan/10">
             {suggestions.slice(0, 5).map((suggestion, index) => {
               const description = COMMAND_DESCRIPTIONS[suggestion] || "Execute this command"
               const isSelected = index === selectedSuggestionIndex
@@ -167,19 +161,19 @@ const CommandPrompt: React.FC<CommandPromptProps> = ({
                   key={index}
                   role="option"
                   aria-selected={isSelected}
-                  className={`px-3 py-2 cursor-pointer transition-colors ${
+                  className={`px-3 py-2.5 cursor-pointer transition-all duration-200 ${
                     isSelected
-                      ? "bg-accent/20 border-l-2 border-accent"
-                      : "hover:bg-background/50 border-l-2 border-transparent"
+                      ? "bg-accent-cyan/25 border-l-2 border-accent-cyan"
+                      : "hover:bg-accent-cyan/10 border-l-2 border-transparent hover:border-accent-cyan/40"
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex-1 min-w-0">
-                      <p className="text-accent font-mono text-sm">{suggestion}</p>
-                      <p className="text-muted-foreground text-xs mt-0.5">{description}</p>
+                      <p className="text-accent-cyan font-mono text-sm font-medium">{suggestion}</p>
+                      <p className="text-muted-foreground/70 text-xs mt-0.5">{description}</p>
                     </div>
-                    <div className="flex items-center gap-1 text-xs text-muted-foreground/60 whitespace-nowrap ml-2">
-                      <kbd className="px-1.5 py-0.5 bg-background/50 rounded text-accent text-xs font-mono border border-border/50">
+                    <div className="flex items-center gap-1 text-xs text-muted-foreground/50 whitespace-nowrap ml-2">
+                      <kbd className="px-1.5 py-0.5 bg-accent-cyan/10 rounded text-accent-cyan text-xs font-mono border border-accent-cyan/30">
                         Tab
                       </kbd>
                     </div>
@@ -188,10 +182,10 @@ const CommandPrompt: React.FC<CommandPromptProps> = ({
               )
             })}
           </div>
-          <div className="px-3 py-2 bg-background/50 text-xs text-muted-foreground/60 border-t border-border/50">
+          <div className="px-3 py-2 bg-terminal-background/40 text-xs text-muted-foreground/50 border-t border-accent-cyan/10">
             <p className="flex items-center gap-1">
-              <ChevronRight className="w-3 h-3" />
-              Press <kbd className="px-1 py-0.5 bg-secondary rounded text-accent text-xs font-mono mx-0.5">Tab</kbd> to select
+              <ChevronRight className="w-3 h-3 text-accent-cyan/60" />
+              Press <kbd className="px-1 py-0.5 bg-accent-cyan/10 rounded text-accent-cyan text-xs font-mono mx-0.5 border border-accent-cyan/20">Tab</kbd> to select
             </p>
           </div>
         </div>
