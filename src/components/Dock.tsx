@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Home, Briefcase, Code2, User, Mail, BookOpen, Help, Settings } from 'lucide-react'
+import { Home, Briefcase, Code2, User, Mail, BookOpen, HelpCircle, Settings } from 'lucide-react'
 
 interface DockItem {
   id: string
@@ -46,7 +46,7 @@ export default function Dock({ items }: DockProps) {
 }
 
 // Helper component to render dock items with icons
-export function getDockItems(onItemClick: (command: string) => void) {
+export function getDockItems(onItemClick: (command: string) => void): DockItem[] {
   return [
     { id: 'home', label: 'Home', icon: <Home size={18} />, onClick: () => onItemClick('clear') },
     { id: 'about', label: 'About', icon: <User size={18} />, onClick: () => onItemClick('about') },
@@ -54,7 +54,7 @@ export function getDockItems(onItemClick: (command: string) => void) {
     { id: 'skills', label: 'Skills', icon: <Code2 size={18} />, onClick: () => onItemClick('skills') },
     { id: 'projects', label: 'Projects', icon: <BookOpen size={18} />, onClick: () => onItemClick('projects') },
     { id: 'contact', label: 'Contact', icon: <Mail size={18} />, onClick: () => onItemClick('contact') },
-    { id: 'help', label: 'Help', icon: <Help size={18} />, onClick: () => onItemClick('help') },
+    { id: 'help', label: 'Help', icon: <HelpCircle size={18} />, onClick: () => onItemClick('help') },
     { id: 'settings', label: 'Settings', icon: <Settings size={18} />, onClick: () => onItemClick('settings') },
   ]
 }
