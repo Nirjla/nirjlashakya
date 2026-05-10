@@ -41,48 +41,65 @@ const Terminal = forwardRef<HTMLDivElement, TerminalProps>(
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.4, duration: 0.5 }}
-        className="flex-1 bg-terminal-background border border-border rounded-lg shadow-xl overflow-hidden flex flex-col terminal-crt terminal-glow cursor-text"
+        className="flex-1 bg-terminal-background border border-accent-cyan/20 rounded-xl shadow-2xl overflow-hidden flex flex-col terminal-crt terminal-glow cursor-text relative z-10 mb-12 sm:mb-0"
         onClick={handleTerminalClick}
       >
         {/* Terminal Header */}
-        <div className="bg-terminal-header px-4 py-3 border-b border-border flex items-center select-none">
-          <div className="flex space-x-2">
-            <div className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors cursor-pointer" title="Close"></div>
-            <div className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-colors cursor-pointer" title="Minimize"></div>
-            <div className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-400 transition-colors cursor-pointer" title="Maximize"></div>
+        <div className="bg-terminal-header/60 px-4 py-3 border-b border-accent-cyan/10 flex items-center select-none gap-3">
+          <div className="flex gap-1.5">
+            <motion.div 
+              whileHover={{ scale: 1.2 }}
+              className="w-3 h-3 rounded-full bg-red-500/70 hover:bg-red-400 transition-colors cursor-pointer shadow-lg shadow-red-500/20" 
+              title="Close"
+            />
+            <motion.div 
+              whileHover={{ scale: 1.2 }}
+              className="w-3 h-3 rounded-full bg-yellow-500/70 hover:bg-yellow-400 transition-colors cursor-pointer shadow-lg shadow-yellow-500/20" 
+              title="Minimize"
+            />
+            <motion.div 
+              whileHover={{ scale: 1.2 }}
+              className="w-3 h-3 rounded-full bg-green-500/70 hover:bg-green-400 transition-colors cursor-pointer shadow-lg shadow-green-500/20" 
+              title="Maximize"
+            />
           </div>
-          <div className="mx-auto text-sm font-medium text-muted-foreground flex items-center gap-2">
-            <span className="text-accent">●</span>
-            <span>{activeSection ? `nirjla@portfolio:~/${activeSection}` : "nirjla@portfolio:~$"}</span>
+          <div className="flex-1 text-center text-xs sm:text-sm font-mono text-muted-foreground flex items-center justify-center gap-2">
+            <span className="text-accent-cyan animate-pulse">●</span>
+            <span className="hidden sm:inline">{activeSection ? `nirjla@portfolio:~/${activeSection}` : "nirjla@portfolio:~$"}</span>
+            <span className="sm:hidden">{activeSection ? activeSection : "portfolio"}</span>
           </div>
-          <div className="w-16"></div>
+          <div className="w-12"></div>
         </div>
 
         {/* Terminal Body */}
         <div
           ref={ref}
-          className="flex-1 p-3 md:p-4 font-mono text-xs md:text-sm overflow-y-auto relative z-20 w-full"
+          className="flex-1 p-4 md:p-5 font-mono text-xs md:text-sm overflow-y-auto relative z-20 w-full space-y-4"
         >
           {history.map((item, index) => (
             <motion.div
               key={index}
-              className="mb-3"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
+              className="space-y-2"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
             >
               {/* Command line */}
-              <div className="flex items-center text-primary-foreground">
-                <span className="text-accent text-glow-subtle mr-1">❯</span>
-                <span className="text-muted-foreground mr-2">~</span>
-                <span className="text-primary-foreground">{item.command}</span>
+              <div className="flex items-center text-primary-foreground gap-2">
+                <span className="text-accent-cyan">$</span>
+                <span className="text-accent">{item.command}</span>
               </div>
 
               {/* Output */}
-              <div className="ml-4 mt-2">
+              <div className="ml-4 text-muted-foreground">
                 {item.isLoading ? (
-                  <div className="flex items-center gap-2 text-accent loading-pulse">
-                    <span className="animate-bounce">●</span>
+                  <div className="flex items-center gap-2 text-accent-cyan">
+                    <motion.span
+                      animate={{ opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      ▌
+                    </motion.span>
                     <span>{item.loadingMsg || "Loading..."}</span>
                   </div>
                 ) : (
@@ -103,13 +120,11 @@ const Terminal = forwardRef<HTMLDivElement, TerminalProps>(
         </div>
 
         {/* Terminal Footer */}
-        <div className="px-3 md:px-4 py-2 border-t border-border bg-terminal-header/50 text-xs text-muted-foreground flex justify-between gap-2 select-none flex-wrap">
-          <span className="hidden sm:inline">Press <kbd className="px-1 py-0.5 bg-secondary rounded text-accent text-xs">Tab</kbd> for autocomplete</span>
-          <span className="hidden sm:inline"><kbd className="px-1 py-0.5 bg-secondary rounded text-accent text-xs">↑↓</kbd> for history</span>
-          <span className="sm:hidden text-xs"><kbd className="px-1 py-0.5 bg-secondary rounded text-accent text-xs">Tab</kbd> <kbd className="px-1 py-0.5 bg-secondary rounded text-accent text-xs">↑↓</kbd></span>
+        <div className="px-4 md:px-5 py-2 border-t border-accent-cyan/10 bg-terminal-header/30 text-xs text-muted-foreground/60 flex justify-between gap-2 select-none flex-wrap">
+          <span className="hidden sm:inline">Tab</span>
+          <span className="hidden sm:inline">↑↓ history</span>
+          <span className="sm:hidden text-xs">↑↓</span>
         </div>
-
-        {/* Terminal Close */}
       </motion.div>
     )
   }

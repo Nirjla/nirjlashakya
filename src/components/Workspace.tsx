@@ -27,12 +27,12 @@ export default function Workspace({
         onSettingsClick={onSettingsClick}
       />
 
-      {/* Main content area - responsive flex container */}
+      {/* Main content area - responsive flex container with mobile padding for dock */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.6 }}
-        className="flex flex-1 overflow-hidden gap-0"
+        className="flex flex-1 overflow-hidden gap-0 pb-20 sm:pb-0"
       >
         {/* Main terminal area - takes full width on mobile, flex-1 on larger screens */}
         <div className="flex-1 overflow-hidden flex flex-col min-w-0 border-r-0 lg:border-r border-border">

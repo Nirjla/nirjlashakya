@@ -29,30 +29,34 @@ export default function StatusBar() {
     <motion.div
       initial={{ y: 60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 0.5, duration: 0.4 }}
-      className="h-10 bg-terminal-header border-t border-border flex items-center justify-between px-4 fixed bottom-0 left-0 right-0 z-40 text-xs font-mono"
+      transition={{ delay: 0.5, duration: 0.5 }}
+      className="hidden sm:flex h-9 bg-terminal-header/50 backdrop-blur-sm border-t border-border/30 items-center justify-between px-4 sm:px-6 fixed bottom-0 left-0 right-0 z-30 text-xs font-mono text-muted-foreground"
     >
-      {/* Left section */}
-      <div className="flex items-center gap-4 text-muted-foreground">
-        <div className="flex items-center gap-1">
-          <Cpu size={12} className="text-accent-cyan" />
-          <span>{cpuLoad.toFixed(1)}%</span>
+      {/* Left section - System stats */}
+      <div className="flex items-center gap-3 md:gap-6">
+        <div className="flex items-center gap-1.5 hover:text-foreground transition-colors">
+          <div className="w-1.5 h-1.5 rounded-full bg-accent-cyan/60 animate-pulse" />
+          <span>Active</span>
         </div>
-        <div className="flex items-center gap-1">
-          <HardDrive size={12} className="text-accent-purple" />
-          <span>{memoryUsage.toFixed(1)}%</span>
+        <div className="hidden md:flex items-center gap-1.5">
+          <Cpu size={12} className="text-accent-cyan/60" />
+          <span className="text-xs">{cpuLoad.toFixed(1)}%</span>
+        </div>
+        <div className="hidden lg:flex items-center gap-1.5">
+          <HardDrive size={12} className="text-accent-purple/60" />
+          <span className="text-xs">{memoryUsage.toFixed(1)}%</span>
         </div>
       </div>
 
       {/* Center - Path/Status */}
-      <div className="flex-1 text-center text-muted-foreground px-4">
-        <span className="text-accent">~/portfolio</span>
+      <div className="flex-1 text-center px-4">
+        <span className="text-accent/70 hover:text-accent transition-colors">~/portfolio</span>
       </div>
 
       {/* Right section - Time */}
-      <div className="flex items-center gap-2 text-muted-foreground">
-        <Clock size={12} className="text-accent-amber" />
-        <span>{formatTime(time)}</span>
+      <div className="flex items-center gap-2 whitespace-nowrap">
+        <Clock size={12} className="text-accent-amber/60" />
+        <span className="text-accent-amber/70">{formatTime(time)}</span>
       </div>
     </motion.div>
   )

@@ -440,3 +440,64 @@ img {
     transition: none !important;
   }
 }
+
+/* Terminal Aesthetic Enhancements */
+
+/* Dock glow effect - cyberpunk terminal vibes */
+.dock-glow {
+  box-shadow: 
+    inset 0 0 20px rgba(0, 255, 255, 0.05),
+    0 0 30px rgba(0, 255, 255, 0.1),
+    0 0 60px rgba(0, 255, 255, 0.05);
+}
+
+/* Terminal window glow */
+.terminal-glow {
+  box-shadow: 
+    0 0 40px rgba(0, 255, 255, 0.08),
+    inset 0 0 20px rgba(0, 255, 255, 0.03),
+    0 0 80px rgba(0, 255, 255, 0.04);
+}
+
+/* Refined CRT scan effect */
+.terminal-crt::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.03),
+    rgba(0, 0, 0, 0.03) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Safe area padding for mobile to prevent dock overlap */
+@media (max-width: 640px) {
+  body {
+    padding-bottom: calc(3.5rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* Glass effect for panels */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 255, 255, 0.1);
+}
+
+/* Smooth transitions for all interactive elements */
+button, a, [role="button"] {
+  transition: all 0.2s ease-out;
+}
+
+/* Subtle glow on focus */
+button:focus-within, input:focus-within {
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+}
