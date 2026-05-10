@@ -45,7 +45,7 @@ export default function Workspace({
             initial={{ x: 400, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.5 }}
-            className="hidden lg:flex w-80 xl:w-96 bg-terminal-background border-l border-border overflow-hidden flex-col flex-shrink-0"
+            className="hidden lg:flex w-80 xl:w-96 bg-terminal-background border-l border-border overflow-hidden flex-col flex-shrink-0 sticky top-16 h-[calc(100vh-4rem)]"
           >
             <InfoPanel />
           </motion.div>

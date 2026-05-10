@@ -131,7 +131,7 @@ const CommandPrompt: React.FC<CommandPromptProps> = ({
             value={currentCommand}
             onChange={onCommandChange}
             onKeyDown={handleDropdownKeyDown}
-            className="w-full bg-transparent border-none outline-none text-foreground font-mono relative z-10 placeholder-muted-foreground/20"
+            className="w-full bg-transparent outline-none text-foreground font-mono relative z-10 placeholder-muted-foreground/20"
             autoFocus
             autoComplete="off"
             autoCapitalize="off"

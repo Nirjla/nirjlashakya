@@ -100,6 +100,9 @@ const Terminal = forwardRef<HTMLDivElement, TerminalProps>(
             suggestions={suggestions}
             onSuggestionSelect={onSuggestionSelect}
           />
+          
+          {/* Auto-scroll sentinel */}
+          <div className="h-0" />
         </div>
 
         {/* Terminal Footer */}
