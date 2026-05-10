@@ -408,8 +408,15 @@ function App() {
     }
   }
 
+  const handleSuggestionSelect = (selectedIndex: number) => {
+    if (suggestions[selectedIndex]) {
+      setCurrentCommand(suggestions[selectedIndex])
+      setSuggestions([])
+    }
+  }
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // Tab autocomplete
+    // Tab autocomplete - only if not handled by CommandPrompt
     if (e.key === "Tab") {
       e.preventDefault()
       if (suggestions.length > 0) {
@@ -521,6 +528,7 @@ function App() {
           onKeyDown={handleKeyDown}
           activeSection={activeSection}
           suggestions={suggestions}
+          onSuggestionSelect={handleSuggestionSelect}
         />
 
         <OptionsPanel onOptionClick={handleOptionClick} activeSection={activeSection} />

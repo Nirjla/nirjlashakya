@@ -11,10 +11,11 @@ interface TerminalProps {
   onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void
   activeSection: string
   suggestions?: string[]
+  onSuggestionSelect?: (selectedIndex: number) => void
 }
 
 const Terminal = forwardRef<HTMLDivElement, TerminalProps>(
-  ({ history, currentCommand, onCommandChange, onCommandSubmit, onKeyDown, activeSection, suggestions }, ref) => {
+  ({ history, currentCommand, onCommandChange, onCommandSubmit, onKeyDown, activeSection, suggestions, onSuggestionSelect }, ref) => {
 
     const handleTerminalClick = () => {
       const input = document.getElementById("command-input")
@@ -77,6 +78,7 @@ const Terminal = forwardRef<HTMLDivElement, TerminalProps>(
             onCommandSubmit={onCommandSubmit}
             onKeyDown={onKeyDown}
             suggestions={suggestions}
+            onSuggestionSelect={onSuggestionSelect}
           />
         </div>
 

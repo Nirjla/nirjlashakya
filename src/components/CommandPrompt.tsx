@@ -8,6 +8,7 @@ interface CommandPromptProps {
   onCommandSubmit: (e: React.FormEvent) => void
   onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void
   suggestions?: string[]
+  onSuggestionSelect?: (selectedIndex: number) => void
 }
 
 // Command descriptions for rich dropdown
@@ -40,7 +41,8 @@ const CommandPrompt: React.FC<CommandPromptProps> = ({
   onCommandChange,
   onCommandSubmit,
   onKeyDown,
-  suggestions = []
+  suggestions = [],
+  onSuggestionSelect
 }) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0)
@@ -74,6 +76,13 @@ const CommandPrompt: React.FC<CommandPromptProps> = ({
     if (e.key === "ArrowUp" && suggestions.length > 0) {
       e.preventDefault()
       setSelectedSuggestionIndex(prev => prev > 0 ? prev - 1 : 0)
+      return
+    }
+
+    // Handle Tab to select highlighted suggestion
+    if (e.key === "Tab" && suggestions.length > 0) {
+      e.preventDefault()
+      onSuggestionSelect?.(selectedSuggestionIndex)
       return
     }
 
