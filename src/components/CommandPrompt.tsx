@@ -46,12 +46,29 @@ const CommandPrompt: React.FC<CommandPromptProps> = ({
 }) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0)
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus()
     }
   }, [])
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+          // Don't close dropdown on input click
+        }
+      }
+    }
+
+    if (suggestions.length > 0) {
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [suggestions.length])
 
   // Reset selection when suggestions change
   useEffect(() => {
@@ -134,7 +151,12 @@ const CommandPrompt: React.FC<CommandPromptProps> = ({
 
       {/* Rich suggestions dropdown */}
       {suggestions.length > 0 && currentCommand.length > 0 && (
-        <div className="ml-6 mt-3 bg-secondary border border-border rounded-lg overflow-hidden shadow-lg animate-in fade-in duration-100">
+        <div
+          ref={dropdownRef}
+          role="listbox"
+          aria-label="Command suggestions"
+          className="ml-6 mt-3 bg-secondary border border-border rounded-lg overflow-hidden shadow-lg animate-in fade-in duration-100"
+        >
           <div className="divide-y divide-border/50">
             {suggestions.slice(0, 5).map((suggestion, index) => {
               const description = COMMAND_DESCRIPTIONS[suggestion] || "Execute this command"
@@ -143,6 +165,8 @@ const CommandPrompt: React.FC<CommandPromptProps> = ({
               return (
                 <div
                   key={index}
+                  role="option"
+                  aria-selected={isSelected}
                   className={`px-3 py-2 cursor-pointer transition-colors ${
                     isSelected
                       ? "bg-accent/20 border-l-2 border-accent"

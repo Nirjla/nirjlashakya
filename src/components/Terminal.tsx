@@ -1,8 +1,9 @@
 import type React from "react"
-import { forwardRef } from "react"
+import { forwardRef, useEffect, useMemo } from "react"
 import { motion } from "framer-motion"
 import CommandPrompt from "./CommandPrompt"
 import { commandExecuteVariants } from "../utils/animations"
+import { useTerminalAutoScroll } from "../hooks/useTerminalAutoScroll"
 import type { JSX } from "react/jsx-runtime"
 
 interface TerminalProps {
@@ -18,6 +19,15 @@ interface TerminalProps {
 
 const Terminal = forwardRef<HTMLDivElement, TerminalProps>(
   ({ history, currentCommand, onCommandChange, onCommandSubmit, onKeyDown, activeSection, suggestions, onSuggestionSelect }, ref) => {
+    // Auto-scroll to bottom when history changes
+    useEffect(() => {
+      if (ref && 'current' in ref && ref.current) {
+        const element = ref.current
+        requestAnimationFrame(() => {
+          element.scrollTop = element.scrollHeight
+        })
+      }
+    }, [history, ref])
 
     const handleTerminalClick = () => {
       const input = document.getElementById("command-input")
@@ -51,8 +61,7 @@ const Terminal = forwardRef<HTMLDivElement, TerminalProps>(
         {/* Terminal Body */}
         <div
           ref={ref}
-          className="flex-1 p-4 font-mono text-sm md:text-base overflow-y-auto relative z-20"
-          style={{ maxHeight: "calc(100vh - 220px)" }}
+          className="flex-1 p-3 md:p-4 font-mono text-xs md:text-sm overflow-y-auto relative z-20 w-full"
         >
           {history.map((item, index) => (
             <motion.div
@@ -94,9 +103,10 @@ const Terminal = forwardRef<HTMLDivElement, TerminalProps>(
         </div>
 
         {/* Terminal Footer */}
-        <div className="px-4 py-2 border-t border-border bg-terminal-header/50 text-xs text-muted-foreground flex justify-between select-none">
-          <span>Press <kbd className="px-1 py-0.5 bg-secondary rounded text-accent">Tab</kbd> for autocomplete</span>
-          <span><kbd className="px-1 py-0.5 bg-secondary rounded text-accent">↑↓</kbd> for history</span>
+        <div className="px-3 md:px-4 py-2 border-t border-border bg-terminal-header/50 text-xs text-muted-foreground flex justify-between gap-2 select-none flex-wrap">
+          <span className="hidden sm:inline">Press <kbd className="px-1 py-0.5 bg-secondary rounded text-accent text-xs">Tab</kbd> for autocomplete</span>
+          <span className="hidden sm:inline"><kbd className="px-1 py-0.5 bg-secondary rounded text-accent text-xs">↑↓</kbd> for history</span>
+          <span className="sm:hidden text-xs"><kbd className="px-1 py-0.5 bg-secondary rounded text-accent text-xs">Tab</kbd> <kbd className="px-1 py-0.5 bg-secondary rounded text-accent text-xs">↑↓</kbd></span>
         </div>
 
         {/* Terminal Close */}

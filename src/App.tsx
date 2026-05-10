@@ -1,11 +1,15 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import { AnimatePresence } from "framer-motion"
+import { Mail, Linkedin, Github, Coffee } from "lucide-react"
 import Terminal from "./components/Terminal"
 import MatrixRain from "./components/MatrixRain"
 import BootScreen from "./components/BootScreen"
 import Workspace from "./components/Workspace"
 import Dock, { getDockItems } from "./components/Dock"
+import SettingsPanel from "./components/SettingsPanel"
 import { sections } from "./data/sections"
+import { useWindowState } from "./hooks/useWindowState"
+import { applyTheme } from "./utils/themes"
 import "./App.css"
 import type React from "react"
 
@@ -29,6 +33,7 @@ const AVAILABLE_COMMANDS = [
   "education",
   "contact",
   "clear",
+  "clear history",
   "neofetch",
   "whoami",
   "ls",
@@ -39,6 +44,7 @@ const AVAILABLE_COMMANDS = [
   "coffee",
   "matrix",
   "theme",
+  "settings",
   "history",
   "shortcuts",
   "exit"
@@ -65,18 +71,40 @@ function App() {
   const [history, setHistory] = useState<Array<{ command: string; output: React.JSX.Element | string; isLoading?: boolean; loadingMsg?: string }>>([])
   const [currentCommand, setCurrentCommand] = useState("")
   const [activeSection, setActiveSection] = useState("")
-  const [commandHistory, setCommandHistory] = useState<string[]>([])
+  const [commandHistory, setCommandHistory] = useState<string[]>(() => {
+    // Load command history from localStorage
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('commandHistory')
+      return saved ? JSON.parse(saved) : []
+    }
+    return []
+  })
   const [historyIndex, setHistoryIndex] = useState(-1)
   const [suggestions, setSuggestions] = useState<string[]>([])
   const [showMatrix, setShowMatrix] = useState(true)
   const [isInitialized, setIsInitialized] = useState(false)
+  const [showSettings, setShowSettings] = useState(false)
 
   const terminalRef = useRef<HTMLDivElement>(null)
+  const lastCommandTimeRef = useRef<number>(0)
+  
+  // Window state for minimize/maximize/close
+  const windowState = useWindowState()
 
-  // Handle boot screen completion
+  // Handle boot screen completion and apply initial theme
   const handleBootComplete = () => {
     setShowBoot(false)
     localStorage.setItem('bootScreenSeen', 'true')
+    // Apply theme from localStorage if it exists
+    const savedTheme = localStorage.getItem('terminalSettings')
+    if (savedTheme) {
+      try {
+        const settings = JSON.parse(savedTheme)
+        applyTheme(settings.theme)
+      } catch (e) {
+        // Ignore parse errors
+      }
+    }
   }
 
   // Welcome message with ASCII art
@@ -106,6 +134,13 @@ function App() {
       setIsInitialized(true)
     }
   }, [isInitialized])
+
+  // Persist command history to localStorage
+  useEffect(() => {
+    if (commandHistory.length > 0) {
+      localStorage.setItem('commandHistory', JSON.stringify(commandHistory))
+    }
+  }, [commandHistory])
 
   // Neofetch-style system info
   const getNeofetch = (): React.ReactNode => (
@@ -174,6 +209,8 @@ function App() {
             { cmd: "date", desc: "Current date" },
             { cmd: "shortcuts", desc: "Keyboard bindings" },
             { cmd: "matrix", desc: "Toggle matrix rain" },
+            { cmd: "settings", desc: "Customize terminal" },
+            { cmd: "theme", desc: "Change theme" },
           ].map(({ cmd, desc }) => (
             <p key={cmd} className="stagger-item">
               <span className="text-accent font-mono">{cmd}</span>
@@ -299,6 +336,13 @@ function App() {
   }
 
   const executeCommand = useCallback(async (command: string) => {
+    // Debounce - prevent rapid command submissions (within 100ms)
+    const now = Date.now()
+    if (now - lastCommandTimeRef.current < 100) {
+      return
+    }
+    lastCommandTimeRef.current = now
+
     const cmd = command.trim().toLowerCase()
 
     // Add to command history
@@ -324,6 +368,14 @@ function App() {
       setHistory([])
       setActiveSection("")
       return
+    } else if (cmd === "clear history") {
+      setCommandHistory([])
+      localStorage.removeItem('commandHistory')
+      output = (
+        <div className="py-2 fade-in">
+          <p className="text-accent">✓ Command history cleared</p>
+        </div>
+      )
     } else if (cmd === "neofetch") {
       output = getNeofetch()
     } else if (cmd === "whoami") {
@@ -374,12 +426,13 @@ function App() {
           Matrix rain {showMatrix ? "disabled" : "enabled"}
         </p>
       )
-    } else if (cmd === "theme") {
+    } else if (cmd === "theme" || cmd === "settings") {
+      setShowSettings(true)
       output = (
         <div className="py-2 fade-in">
-          <p className="text-accent mb-2">Current theme: Silver</p>
+          <p className="text-accent mb-2">Opening Settings Panel...</p>
           <p className="text-muted-foreground text-sm">
-            Theme switching coming soon!
+            Use the settings panel on the right to customize your terminal experience!
           </p>
         </div>
       )
@@ -493,29 +546,54 @@ function App() {
     }, 0)
   })
 
+  // Handle window close - reset terminal
+  const handleWindowClose = () => {
+    setHistory([{ command: "welcome", output: getWelcomeMessage() as React.JSX.Element }])
+    setActiveSection("")
+    setCurrentCommand("")
+    setSuggestions([])
+    windowState.reset()
+  }
+
   return (
     <>
       <AnimatePresence>
         {showBoot && <BootScreen onBootComplete={handleBootComplete} />}
       </AnimatePresence>
 
-      <Workspace showRightPanel={true}>
+      <Workspace
+        showRightPanel={true}
+        windowState={windowState.state}
+        onMinimize={windowState.toggleMinimize}
+        onMaximize={windowState.toggleMaximize}
+        onClose={handleWindowClose}
+        onSettingsClick={() => setShowSettings(true)}
+      >
         {showMatrix && <MatrixRain />}
         
         <div className="flex flex-col h-full relative z-10">
-          <Terminal
-            ref={terminalRef}
-            history={history}
-            currentCommand={currentCommand}
-            onCommandChange={handleCommandChange}
-            onCommandSubmit={handleCommandSubmit}
-            onKeyDown={handleKeyDown}
-            activeSection={activeSection}
-            suggestions={suggestions}
-            onSuggestionSelect={handleSuggestionSelect}
-          />
+          {windowState.state !== 'minimized' && (
+            <Terminal
+              ref={terminalRef}
+              history={history}
+              currentCommand={currentCommand}
+              onCommandChange={handleCommandChange}
+              onCommandSubmit={handleCommandSubmit}
+              onKeyDown={handleKeyDown}
+              activeSection={activeSection}
+              suggestions={suggestions}
+              onSuggestionSelect={handleSuggestionSelect}
+            />
+          )}
+          {windowState.state === 'minimized' && (
+            <div className="flex-1 flex items-center justify-center text-muted-foreground">
+              <p>Terminal minimized - click minimize button to restore</p>
+            </div>
+          )}
         </div>
       </Workspace>
+
+      <SettingsPanel isOpen={showSettings} onClose={() => setShowSettings(false)} />
 
       {!showBoot && <Dock items={dockItems} />}
     </>
