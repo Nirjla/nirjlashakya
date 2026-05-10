@@ -19,16 +19,16 @@ export default function Dock({ items }: DockProps) {
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.6, duration: 0.4 }}
-      className="fixed bottom-3 sm:bottom-16 left-1/2 -translate-x-1/2 z-30 w-full px-3 sm:w-auto sm:px-0"
+      className="fixed bottom-0 sm:bottom-16 right-0 sm:left-1/2 sm:-translate-x-1/2 z-30 w-full sm:w-auto px-3 sm:px-0 py-3 sm:py-0"
     >
-      <div className="flex gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-full bg-secondary/80 backdrop-blur-md border border-border shadow-lg overflow-x-auto mx-auto w-fit max-w-[calc(100vw-24px)] sm:max-w-none justify-center">
+      <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-2 px-3 sm:px-4 py-3 sm:py-3 rounded-t-lg sm:rounded-full bg-secondary/80 backdrop-blur-md border border-border shadow-lg mx-auto w-fit sm:max-w-none justify-center">
         {items.map((item) => (
           <motion.button
             key={item.id}
             whileHover={{ scale: 1.2, y: -8 }}
             whileTap={{ scale: 0.95 }}
             onClick={item.onClick}
-            className={`p-2 sm:p-2.5 rounded-lg transition-all duration-200 flex-shrink-0 min-w-fit ${
+            className={`p-2 sm:p-2.5 rounded-lg transition-all duration-200 flex-shrink-0 min-w-fit flex items-center sm:block ${
               item.isActive
                 ? 'bg-accent/20 border border-accent'
                 : 'text-muted-foreground hover:text-accent hover:bg-secondary border border-transparent'
@@ -38,6 +38,7 @@ export default function Dock({ items }: DockProps) {
             <div className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
               {item.icon}
             </div>
+            <span className="ml-2 sm:hidden text-xs text-muted-foreground">{item.label}</span>
           </motion.button>
         ))}
       </div>
