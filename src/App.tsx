@@ -38,11 +38,22 @@ const AVAILABLE_COMMANDS = [
   "matrix",
   "theme",
   "history",
+  "shortcuts",
   "exit"
 ]
 
+// Command metadata for loading states
+const COMMAND_METADATA: Record<string, { loadingMsg: string; icon?: string }> = {
+  "about": { loadingMsg: "Fetching bio...", icon: "ℹ" },
+  "experience": { loadingMsg: "Loading work history...", icon: "💼" },
+  "skills": { loadingMsg: "Compiling technical skills...", icon: "⚙" },
+  "projects": { loadingMsg: "Pulling up projects...", icon: "🚀" },
+  "education": { loadingMsg: "Retrieving academic background...", icon: "🎓" },
+  "contact": { loadingMsg: "Preparing contact info...", icon: "📧" },
+}
+
 function App() {
-  const [history, setHistory] = useState<Array<{ command: string; output: React.JSX.Element | string; isLoading?: boolean }>>([])
+  const [history, setHistory] = useState<Array<{ command: string; output: React.JSX.Element | string; isLoading?: boolean; loadingMsg?: string }>>([])
   const [currentCommand, setCurrentCommand] = useState("")
   const [activeSection, setActiveSection] = useState("")
   const [commandHistory, setCommandHistory] = useState<string[]>([])
@@ -146,6 +157,7 @@ function App() {
             { cmd: "clear", desc: "Clear terminal" },
             { cmd: "history", desc: "Command history" },
             { cmd: "date", desc: "Current date" },
+            { cmd: "shortcuts", desc: "Keyboard bindings" },
             { cmd: "matrix", desc: "Toggle matrix rain" },
           ].map(({ cmd, desc }) => (
             <p key={cmd} className="stagger-item">
@@ -159,6 +171,47 @@ function App() {
         Tip: Use <kbd className="px-1 py-0.5 bg-secondary rounded text-accent">Tab</kbd> for autocomplete and
         <kbd className="px-1 py-0.5 bg-secondary rounded text-accent ml-1">↑↓</kbd> for history navigation
       </p>
+    </div>
+  )
+
+  // Keyboard shortcuts output
+  const getShortcutsOutput = (): React.ReactNode => (
+    <div className="py-2 fade-in">
+      <p className="font-bold text-accent mb-4 flex items-center gap-2">
+        ⌨ Keyboard Shortcuts
+      </p>
+      <div className="space-y-4">
+        <div>
+          <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Navigation</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+            <p className="flex justify-between">
+              <kbd className="px-2 py-1 bg-secondary rounded text-accent font-mono">↑ / ↓</kbd>
+              <span className="text-muted-foreground">Navigate command history</span>
+            </p>
+            <p className="flex justify-between">
+              <kbd className="px-2 py-1 bg-secondary rounded text-accent font-mono">Tab</kbd>
+              <span className="text-muted-foreground">Autocomplete command</span>
+            </p>
+            <p className="flex justify-between">
+              <kbd className="px-2 py-1 bg-secondary rounded text-accent font-mono">Escape</kbd>
+              <span className="text-muted-foreground">Clear input & suggestions</span>
+            </p>
+            <p className="flex justify-between">
+              <kbd className="px-2 py-1 bg-secondary rounded text-accent font-mono">Enter</kbd>
+              <span className="text-muted-foreground">Execute command</span>
+            </p>
+          </div>
+        </div>
+        <div>
+          <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Tips</p>
+          <ul className="space-y-1 text-sm text-muted-foreground list-disc list-inside">
+            <li>Start typing a command, then press <kbd className="px-1 py-0.5 bg-secondary rounded text-accent text-xs font-mono">Tab</kbd> to autocomplete</li>
+            <li>Use <kbd className="px-1 py-0.5 bg-secondary rounded text-accent text-xs font-mono">↑</kbd> to go back in command history</li>
+            <li>Type <kbd className="px-1 py-0.5 bg-secondary rounded text-accent text-xs font-mono">help</kbd> for full command list</li>
+            <li>Click the sidebar or panel buttons to execute commands</li>
+          </ul>
+        </div>
+      </div>
     </div>
   )
 
@@ -239,8 +292,12 @@ function App() {
     }
     setHistoryIndex(-1)
 
+    // Get loading message from metadata
+    const metadata = COMMAND_METADATA[cmd]
+    const loadingMsg = metadata?.loadingMsg || "Processing..."
+
     // Add loading state
-    const loadingEntry = { command: cmd, output: "", isLoading: true }
+    const loadingEntry = { command: cmd, output: "", isLoading: true, loadingMsg }
     setHistory(prev => [...prev, loadingEntry])
 
     let output: React.ReactNode | string = `Command not found: ${cmd}. Type 'help' to see available commands.`
@@ -311,6 +368,8 @@ function App() {
           </p>
         </div>
       )
+    } else if (cmd === "shortcuts") {
+      output = getShortcutsOutput()
     } else if (easterEggs[cmd]) {
       output = easterEggs[cmd]()
     } else if (sections[cmd]) {

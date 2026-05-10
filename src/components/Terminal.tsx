@@ -4,7 +4,7 @@ import CommandPrompt from "./CommandPrompt"
 import type { JSX } from "react/jsx-runtime"
 
 interface TerminalProps {
-  history: Array<{ command: string; output: JSX.Element | string; isLoading?: boolean }>
+  history: Array<{ command: string; output: JSX.Element | string; isLoading?: boolean; loadingMsg?: string }>
   currentCommand: string
   onCommandChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   onCommandSubmit: (e: React.FormEvent) => void
@@ -61,8 +61,8 @@ const Terminal = forwardRef<HTMLDivElement, TerminalProps>(
               <div className="ml-4 mt-2">
                 {item.isLoading ? (
                   <div className="flex items-center gap-2 text-accent loading-pulse">
-                    <span>●</span>
-                    <span>Loading...</span>
+                    <span className="animate-bounce">●</span>
+                    <span>{item.loadingMsg || "Loading..."}</span>
                   </div>
                 ) : (
                   item.output

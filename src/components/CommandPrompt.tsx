@@ -1,5 +1,6 @@
 import type React from "react"
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
+import { ChevronRight } from "lucide-react"
 
 interface CommandPromptProps {
   currentCommand: string
@@ -7,6 +8,31 @@ interface CommandPromptProps {
   onCommandSubmit: (e: React.FormEvent) => void
   onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void
   suggestions?: string[]
+}
+
+// Command descriptions for rich dropdown
+const COMMAND_DESCRIPTIONS: Record<string, string> = {
+  "about": "Learn more about me",
+  "experience": "View my work experience",
+  "skills": "See technical skills",
+  "projects": "Check out my projects",
+  "education": "Educational background",
+  "contact": "Get in touch with me",
+  "help": "Show all available commands",
+  "neofetch": "System info in ASCII art",
+  "whoami": "Display current user",
+  "clear": "Clear the terminal",
+  "history": "Show command history",
+  "shortcuts": "View keyboard shortcuts",
+  "date": "Show current date & time",
+  "matrix": "Toggle matrix rain effect",
+  "theme": "Change terminal theme",
+  "ls": "List directory contents",
+  "pwd": "Print working directory",
+  "echo": "Print arguments to output",
+  "coffee": "Brew some coffee!",
+  "sudo hire me": "Contact information",
+  "exit": "Exit the terminal",
 }
 
 const CommandPrompt: React.FC<CommandPromptProps> = ({
@@ -17,12 +43,42 @@ const CommandPrompt: React.FC<CommandPromptProps> = ({
   suggestions = []
 }) => {
   const inputRef = useRef<HTMLInputElement>(null)
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0)
 
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus()
     }
   }, [])
+
+  // Reset selection when suggestions change
+  useEffect(() => {
+    setSelectedSuggestionIndex(0)
+  }, [suggestions, currentCommand])
+
+  // Handle keyboard navigation in dropdown
+  const handleDropdownKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (suggestions.length === 0) {
+      onKeyDown(e)
+      return
+    }
+
+    if (e.key === "ArrowDown" && suggestions.length > 0) {
+      e.preventDefault()
+      setSelectedSuggestionIndex(prev => 
+        prev < suggestions.length - 1 ? prev + 1 : prev
+      )
+      return
+    }
+
+    if (e.key === "ArrowUp" && suggestions.length > 0) {
+      e.preventDefault()
+      setSelectedSuggestionIndex(prev => prev > 0 ? prev - 1 : 0)
+      return
+    }
+
+    onKeyDown(e)
+  }
 
   // Get the best matching suggestion for inline display
   const inlineSuggestion = suggestions.length > 0 && currentCommand.length > 0
@@ -49,7 +105,7 @@ const CommandPrompt: React.FC<CommandPromptProps> = ({
             type="text"
             value={currentCommand}
             onChange={onCommandChange}
-            onKeyDown={onKeyDown}
+            onKeyDown={handleDropdownKeyDown}
             className="w-full bg-transparent border-none outline-none text-primary-foreground font-mono relative z-10"
             autoFocus
             autoComplete="off"
@@ -67,17 +123,44 @@ const CommandPrompt: React.FC<CommandPromptProps> = ({
         </div>
       </div>
 
-      {/* Suggestions dropdown */}
-      {suggestions.length > 1 && currentCommand.length > 0 && (
-        <div className="ml-6 mt-2 flex flex-wrap gap-2">
-          {suggestions.slice(0, 5).map((suggestion, index) => (
-            <span
-              key={index}
-              className="text-xs px-2 py-1 rounded bg-secondary text-muted-foreground border border-border"
-            >
-              {suggestion}
-            </span>
-          ))}
+      {/* Rich suggestions dropdown */}
+      {suggestions.length > 0 && currentCommand.length > 0 && (
+        <div className="ml-6 mt-3 bg-secondary border border-border rounded-lg overflow-hidden shadow-lg animate-in fade-in duration-100">
+          <div className="divide-y divide-border/50">
+            {suggestions.slice(0, 5).map((suggestion, index) => {
+              const description = COMMAND_DESCRIPTIONS[suggestion] || "Execute this command"
+              const isSelected = index === selectedSuggestionIndex
+              
+              return (
+                <div
+                  key={index}
+                  className={`px-3 py-2 cursor-pointer transition-colors ${
+                    isSelected
+                      ? "bg-accent/20 border-l-2 border-accent"
+                      : "hover:bg-background/50 border-l-2 border-transparent"
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-accent font-mono text-sm">{suggestion}</p>
+                      <p className="text-muted-foreground text-xs mt-0.5">{description}</p>
+                    </div>
+                    <div className="flex items-center gap-1 text-xs text-muted-foreground/60 whitespace-nowrap ml-2">
+                      <kbd className="px-1.5 py-0.5 bg-background/50 rounded text-accent text-xs font-mono border border-border/50">
+                        Tab
+                      </kbd>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+          <div className="px-3 py-2 bg-background/50 text-xs text-muted-foreground/60 border-t border-border/50">
+            <p className="flex items-center gap-1">
+              <ChevronRight className="w-3 h-3" />
+              Press <kbd className="px-1 py-0.5 bg-secondary rounded text-accent text-xs font-mono mx-0.5">Tab</kbd> to select
+            </p>
+          </div>
         </div>
       )}
     </form>
