@@ -50,30 +50,22 @@ export default function BottomDrawer({ isOpen, onClose, title = 'Navigation', ch
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '100%', opacity: 0 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed bottom-0 left-0 right-0 z-50 max-h-[85vh] rounded-t-2xl bg-terminal-background border-t border-accent-cyan/30 shadow-2xl overflow-hidden flex flex-col"
+            className="fixed bottom-0 left-0 right-0 z-50 max-h-[85vh] rounded-t-lg bg-terminal-background border-t border-border overflow-hidden flex flex-col"
           >
             {/* Handle bar and header */}
-            <div className="sticky top-0 bg-terminal-background/80 backdrop-blur-sm border-b border-accent-cyan/20 px-4 py-4 flex items-center justify-between">
-              {/* Drag handle indicator */}
-              <div className="flex-1 flex justify-center">
-                <div className="w-12 h-1 rounded-full bg-accent-cyan/30" />
-              </div>
-
+            <div className="sticky top-0 bg-terminal-background border-b border-border px-4 py-3 flex items-center justify-between">
               {/* Title and close button */}
-              <div className="flex-1 flex items-center justify-between gap-4">
-                <h2 className="text-sm font-mono font-semibold text-foreground uppercase tracking-wider">
-                  {title}
-                </h2>
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={onClose}
-                  className="p-1.5 rounded-lg hover:bg-accent-cyan/20 text-muted-foreground hover:text-accent-cyan transition-colors"
-                  aria-label="Close drawer"
-                >
-                  <X size={20} />
-                </motion.button>
-              </div>
+              <h2 className="text-sm font-mono font-semibold text-foreground uppercase tracking-wide">
+                {title}
+              </h2>
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                onClick={onClose}
+                className="p-1.5 rounded hover:bg-secondary text-muted-foreground hover:text-accent-cyan transition-colors"
+                aria-label="Close drawer"
+              >
+                <X size={20} />
+              </motion.button>
             </div>
 
             {/* Content */}

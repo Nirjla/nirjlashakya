@@ -7,22 +7,17 @@ export default function ProfileCard() {
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.2, duration: 0.4 }}
-      className="p-5 border-b border-accent-cyan/20 space-y-4"
+      className="p-5 border-b border-border space-y-4"
     >
-      {/* Profile Avatar - Logo with glow */}
+      {/* Profile Avatar - Logo */}
       <div className="flex justify-center mb-2">
-        <motion.div 
-          whileHover={{ scale: 1.05 }}
-          className="w-24 h-24 rounded-full bg-gradient-to-br from-accent-cyan/30 to-accent-purple/30 p-0.5 ring-1 ring-accent-cyan/30 shadow-lg shadow-accent-cyan/20"
-        >
-          <div className="w-full h-full rounded-full bg-terminal-background flex items-center justify-center overflow-hidden border border-accent-cyan/20">
-            <img 
-              src="/nirjla_terminal.png" 
-              alt="Nirjla Shakya Logo" 
-              className="w-full h-full object-cover rounded-full"
-            />
-          </div>
-        </motion.div>
+        <div className="w-24 h-24 rounded-full bg-terminal-background border border-border">
+          <img 
+            src="/nirjla_terminal.png" 
+            alt="Nirjla Shakya Logo" 
+            className="w-full h-full object-cover rounded-full"
+          />
+        </div>
       </div>
 
       {/* Profile Info */}
@@ -32,18 +27,12 @@ export default function ProfileCard() {
         
         {/* Status Badges */}
         <div className="flex justify-center gap-2 flex-wrap pt-1">
-          <motion.span 
-            whileHover={{ scale: 1.05 }}
-            className="inline-block px-2.5 py-1 rounded-full text-xs font-mono bg-accent-cyan/15 text-accent-cyan border border-accent-cyan/40 hover:border-accent-cyan/60 transition-colors"
-          >
+          <span className="inline-block px-2.5 py-1 rounded-full text-xs font-mono bg-secondary text-accent-cyan border border-border">
             Available
-          </motion.span>
-          <motion.span 
-            whileHover={{ scale: 1.05 }}
-            className="inline-block px-2.5 py-1 rounded-full text-xs font-mono bg-accent-purple/15 text-accent-purple border border-accent-purple/40 hover:border-accent-purple/60 transition-colors"
-          >
+          </span>
+          <span className="inline-block px-2.5 py-1 rounded-full text-xs font-mono bg-secondary text-accent-cyan border border-border">
             Remote
-          </motion.span>
+          </span>
         </div>
       </div>
 
@@ -54,46 +43,39 @@ export default function ProfileCard() {
 
       {/* CTA Button */}
       <motion.button 
-        whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className="w-full px-3 py-2.5 rounded-lg bg-gradient-to-r from-accent-cyan/30 to-accent-cyan/20 text-accent-cyan text-xs font-mono font-semibold border border-accent-cyan/50 hover:border-accent-cyan/80 shadow-lg shadow-accent-cyan/20 transition-all duration-300"
+        className="w-full px-3 py-2.5 rounded bg-secondary text-accent-cyan text-xs font-mono font-semibold border border-border hover:bg-secondary/80 transition-colors"
       >
         Contact
       </motion.button>
 
       {/* Social Links */}
       <div className="flex justify-center gap-2 pt-2">
-        <motion.a
-          whileHover={{ scale: 1.15, y: -4 }}
-          whileTap={{ scale: 0.95 }}
+        <a
           href="https://github.com/nirjla"
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 rounded-lg border border-border/50 hover:border-accent-cyan/50 bg-secondary/30 hover:bg-accent-cyan/15 transition-all text-muted-foreground hover:text-accent-cyan shadow-sm"
+          className="p-2 rounded border border-border hover:bg-secondary text-muted-foreground hover:text-accent-cyan transition-colors"
           title="GitHub"
         >
           <Github size={16} />
-        </motion.a>
-        <motion.a
-          whileHover={{ scale: 1.15, y: -4 }}
-          whileTap={{ scale: 0.95 }}
+        </a>
+        <a
           href="https://www.linkedin.com/in/nirjalashakya"
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 rounded-lg border border-border/50 hover:border-accent-cyan/50 bg-secondary/30 hover:bg-accent-cyan/15 transition-all text-muted-foreground hover:text-accent-cyan shadow-sm"
+          className="p-2 rounded border border-border hover:bg-secondary text-muted-foreground hover:text-accent-cyan transition-colors"
           title="LinkedIn"
         >
           <Linkedin size={16} />
-        </motion.a>
-        <motion.a
-          whileHover={{ scale: 1.15, y: -4 }}
-          whileTap={{ scale: 0.95 }}
+        </a>
+        <a
           href="mailto:shakyanirjala6@gmail.com"
-          className="p-2 rounded-lg border border-border/50 hover:border-accent-cyan/50 bg-secondary/30 hover:bg-accent-cyan/15 transition-all text-muted-foreground hover:text-accent-cyan shadow-sm"
+          className="p-2 rounded border border-border hover:bg-secondary text-muted-foreground hover:text-accent-cyan transition-colors"
           title="Email"
         >
           <Mail size={16} />
-        </motion.a>
+        </a>
       </div>
     </motion.div>
   )

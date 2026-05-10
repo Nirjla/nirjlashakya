@@ -441,114 +441,17 @@ img {
   }
 }
 
-/* Terminal Aesthetic Enhancements */
-
-/* Dock glow effect - cyberpunk terminal vibes */
-.dock-glow {
-  box-shadow: 
-    inset 0 0 20px rgba(0, 255, 255, 0.05),
-    0 0 30px rgba(0, 255, 255, 0.1),
-    0 0 60px rgba(0, 255, 255, 0.05);
-}
-
-/* Terminal window glow */
-.terminal-glow {
-  box-shadow: 
-    0 0 40px rgba(0, 255, 255, 0.08),
-    inset 0 0 20px rgba(0, 255, 255, 0.03),
-    0 0 80px rgba(0, 255, 255, 0.04);
-}
-
-/* Refined CRT scan effect */
-.terminal-crt::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.03),
-    rgba(0, 0, 0, 0.03) 1px,
-    transparent 1px,
-    transparent 2px
-  );
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Safe area padding for mobile to prevent dock overlap */
-@media (max-width: 640px) {
-  body {
-    padding-bottom: calc(3.5rem + env(safe-area-inset-bottom));
-  }
-}
-
-/* Glass effect for panels */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.5);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 255, 255, 0.1);
-}
+/* Minimal Terminal Design */
 
 /* Smooth transitions for all interactive elements */
 button, a, [role="button"] {
-  transition: all 0.2s ease-out;
+  transition: color 0.2s ease-out, border-color 0.2s ease-out;
 }
 
-/* Subtle glow on focus */
-button:focus-within, input:focus-within {
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-}
-
-/* Refined animations */
-
-/* Pulse animation for status indicators */
-@keyframes subtle-pulse {
-  0%, 100% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-.status-pulse {
-  animation: subtle-pulse 2s ease-in-out infinite;
-}
-
-/* Glow animation for accent elements */
-@keyframes glow-pulse {
-  0%, 100% {
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-  }
-}
-
-.glow-accent {
-  animation: glow-pulse 3s ease-in-out infinite;
-}
-
-/* Smooth hover lift effect */
-.hover-lift {
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.hover-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(0, 255, 255, 0.15);
-}
-
-/* Terminal text glow */
-.text-glow {
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
-}
-
-.text-glow-subtle {
-  text-shadow: 0 0 4px rgba(0, 255, 255, 0.2);
+/* Focus indication without glow */
+button:focus-visible, input:focus-visible {
+  outline: 2px solid hsl(var(--accent-cyan));
+  outline-offset: 2px;
 }
 
 /* Smooth scroll behavior */
@@ -556,56 +459,21 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Better keyboard focus indication */
-@media (prefers-reduced-motion: no-preference) {
-  a:focus-visible,
-  button:focus-visible,
-  input:focus-visible,
-  select:focus-visible,
-  textarea:focus-visible {
-    animation: focus-ring 0.3s ease-out;
-  }
+/* Simple scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-@keyframes focus-ring {
-  0% {
-    box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
-  }
-  100% {
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-  }
-}
-
-/* Custom scrollbar styling for drawer */
-.scrollbar-thin::-webkit-scrollbar {
-  width: 6px;
-}
-
-.scrollbar-thumb-accent-cyan-20::-webkit-scrollbar-thumb {
-  background: rgba(0, 255, 255, 0.2);
-  border-radius: 3px;
-}
-
-.scrollbar-thumb-accent-cyan-20::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 255, 255, 0.4);
-}
-
-.scrollbar-track-transparent::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: transparent;
 }
 
-/* Drawer animation entrance */
-.drawer-enter {
-  animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 4px;
 }
 
-@keyframes slideUp {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
 }
