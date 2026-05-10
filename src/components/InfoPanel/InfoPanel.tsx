@@ -9,12 +9,12 @@ export default function InfoPanel() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.3, duration: 0.4 }}
-      className="h-full overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-border hover:scrollbar-thumb-muted-foreground"
+      className="pb-12"
     >
       <ProfileCard />
       <FeaturedProjects />
       <QuickStats />
-      
+
       {/* Footer */}
       <div className="p-4 border-t border-border text-center">
         <p className="text-xs text-muted-foreground">

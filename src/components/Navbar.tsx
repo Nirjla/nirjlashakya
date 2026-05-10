@@ -1,32 +1,34 @@
 import { motion } from 'framer-motion'
-import { Minimize2, Maximize2, X } from 'lucide-react'
 
 interface NavbarProps {
   title?: string
   showControls?: boolean
 }
 
-export default function Navbar({ title = 'Nirjla Workstation', showControls = true }: NavbarProps) {
+export default function Navbar({
+  title = 'Nirjla Workstation',
+  showControls = true,
+}: NavbarProps) {
   return (
     <motion.div
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.3, duration: 0.4 }}
-      className="h-12 bg-terminal-header border-b border-border flex items-center justify-between px-4 sticky top-0 z-40"
+      className="h-12 bg-terminal-header border-b border-border flex items-center justify-between px-2 sm:px-4 sticky top-0 z-40 gap-2"
     >
       {/* Left side */}
-      <div className="flex items-center gap-3 flex-1 min-w-0">
-        <div className="w-3 h-3 rounded-full bg-accent-cyan/60 animate-pulse" />
-        <span className="text-sm font-mono text-muted-foreground truncate">
+      <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+        <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-accent-cyan/60 animate-pulse flex-shrink-0" />
+        <span className="text-xs sm:text-sm font-mono text-muted-foreground truncate">
           {title}
         </span>
       </div>
 
-      {/* Center - Status indicators */}
-      <div className="flex items-center gap-4 text-xs font-mono text-muted-foreground">
-        <div className="flex items-center gap-1 hidden sm:flex">
+      {/* Center - Status indicators - responsive display */}
+      <div className="flex items-center gap-2 sm:gap-4 text-xs font-mono text-muted-foreground flex-shrink-0">
+        <div className="flex items-center gap-1 hidden xs:flex">
           <span className="text-accent-cyan">●</span>
-          <span>Active</span>
+          <span className="hidden sm:inline">Active</span>
         </div>
         <div className="flex items-center gap-1 hidden md:flex">
           <span className="text-accent">●</span>
@@ -34,29 +36,7 @@ export default function Navbar({ title = 'Nirjla Workstation', showControls = tr
         </div>
       </div>
 
-      {/* Right side - Window controls */}
-      {showControls && (
-        <div className="flex items-center gap-2 ml-4">
-          <button
-            aria-label="Minimize"
-            className="p-1 hover:bg-secondary rounded transition-colors text-muted-foreground hover:text-foreground"
-          >
-            <Minimize2 size={14} />
-          </button>
-          <button
-            aria-label="Maximize"
-            className="p-1 hover:bg-secondary rounded transition-colors text-muted-foreground hover:text-foreground"
-          >
-            <Maximize2 size={14} />
-          </button>
-          <button
-            aria-label="Close"
-            className="p-1 hover:bg-destructive/20 rounded transition-colors text-muted-foreground hover:text-destructive"
-          >
-            <X size={14} />
-          </button>
-        </div>
-      )}
+
     </motion.div>
   )
 }

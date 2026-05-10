@@ -7,55 +7,55 @@ export default function ProfileCard() {
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.2, duration: 0.4 }}
-      className="p-4 border-b border-border"
+      className="p-5 border-b border-border space-y-4"
     >
-      {/* Profile Avatar Placeholder */}
-      <div className="flex justify-center mb-4">
-        <div className="w-24 h-24 rounded-full bg-gradient-to-br from-accent-cyan to-accent-purple p-1">
-          <div className="w-full h-full rounded-full bg-terminal-background flex items-center justify-center text-2xl font-bold text-accent">
-            NS
-          </div>
+      {/* Profile Avatar - Logo */}
+      <div className="flex justify-center mb-2">
+        <div className="w-24 h-24 rounded-full bg-terminal-background border border-border">
+          <img 
+            src="/nirjla_terminal.png" 
+            alt="Nirjla Shakya Logo" 
+            className="w-full h-full object-cover rounded-full"
+          />
         </div>
       </div>
 
       {/* Profile Info */}
-      <div className="text-center mb-4">
-        <h2 className="text-lg font-bold text-primary-foreground">Nirjla Shakya</h2>
-        <p className="text-sm text-accent mb-2">Software Engineer</p>
+      <div className="text-center space-y-2">
+        <h2 className="text-lg font-bold text-foreground">Nirjla Shakya</h2>
+        <p className="text-xs text-accent-cyan font-mono uppercase tracking-widest">Software Engineer</p>
         
         {/* Status Badges */}
-        <div className="flex justify-center gap-2 flex-wrap">
-          <span className="inline-block px-2.5 py-1 rounded-full text-xs font-mono bg-accent-cyan/20 text-accent-cyan border border-accent-cyan/30">
+        <div className="flex justify-center gap-2 flex-wrap pt-1">
+          <span className="inline-block px-2.5 py-1 rounded-full text-xs font-mono bg-secondary text-accent-cyan border border-border">
             Available
           </span>
-          <span className="inline-block px-2.5 py-1 rounded-full text-xs font-mono bg-accent-purple/20 text-accent-purple border border-accent-purple/30">
+          <span className="inline-block px-2.5 py-1 rounded-full text-xs font-mono bg-secondary text-accent-cyan border border-border">
             Remote
           </span>
         </div>
       </div>
 
       {/* Quick Bio */}
-      <p className="text-xs text-muted-foreground text-center mb-4">
+      <p className="text-xs text-muted-foreground text-center leading-relaxed">
         Crafting elegant web experiences with modern tech stack. Passionate about performance and user experience.
       </p>
 
-      {/* CTA Buttons */}
-      <div className="flex gap-2 mb-4">
-        <button className="flex-1 px-3 py-2 rounded bg-accent text-accent-foreground text-xs font-mono hover:bg-accent/90 transition-colors">
-          Resume
-        </button>
-        <button className="flex-1 px-3 py-2 rounded border border-border text-foreground text-xs font-mono hover:bg-secondary transition-colors">
-          Contact
-        </button>
-      </div>
+      {/* CTA Button */}
+      <motion.button 
+        whileTap={{ scale: 0.98 }}
+        className="w-full px-3 py-2.5 rounded bg-secondary text-accent-cyan text-xs font-mono font-semibold border border-border hover:bg-secondary/80 transition-colors"
+      >
+        Contact
+      </motion.button>
 
       {/* Social Links */}
-      <div className="flex justify-center gap-3">
+      <div className="flex justify-center gap-2 pt-2">
         <a
           href="https://github.com/nirjla"
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 rounded hover:bg-secondary transition-colors text-muted-foreground hover:text-accent"
+          className="p-2 rounded border border-border hover:bg-secondary text-muted-foreground hover:text-accent-cyan transition-colors"
           title="GitHub"
         >
           <Github size={16} />
@@ -64,14 +64,14 @@ export default function ProfileCard() {
           href="https://www.linkedin.com/in/nirjalashakya"
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 rounded hover:bg-secondary transition-colors text-muted-foreground hover:text-accent"
+          className="p-2 rounded border border-border hover:bg-secondary text-muted-foreground hover:text-accent-cyan transition-colors"
           title="LinkedIn"
         >
           <Linkedin size={16} />
         </a>
         <a
           href="mailto:shakyanirjala6@gmail.com"
-          className="p-2 rounded hover:bg-secondary transition-colors text-muted-foreground hover:text-accent"
+          className="p-2 rounded border border-border hover:bg-secondary text-muted-foreground hover:text-accent-cyan transition-colors"
           title="Email"
         >
           <Mail size={16} />
