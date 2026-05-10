@@ -42,12 +42,13 @@ export default function ProfileCard() {
       </p>
 
       {/* CTA Button */}
-      <motion.button 
+      <motion.a 
+        href="mailto:shakyanirjala6@gmail.com"
         whileTap={{ scale: 0.98 }}
-        className="w-full px-3 py-2.5 rounded bg-secondary text-accent-cyan text-xs font-mono font-semibold border border-border hover:bg-secondary/80 transition-colors"
+        className="block text-center w-full px-3 py-2.5 rounded bg-secondary text-accent text-xs font-mono font-semibold border border-border hover:bg-secondary/80 transition-colors"
       >
         Contact
-      </motion.button>
+      </motion.a>
 
       {/* Social Links */}
       <div className="flex justify-center gap-2 pt-2">
