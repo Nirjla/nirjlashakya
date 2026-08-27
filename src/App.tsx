@@ -105,7 +105,7 @@ function App() {
       </pre>
       <div className="mt-4 space-y-2">
         <p className="text-primary-foreground text-lg">
-          Welcome to my terminal portfolio!
+          Welcome!
         </p>
         {/* <p className="text-muted-foreground">
           I'm <span className="text-accent font-semibold">Nirjla Shakya</span>, a Software Engineer.
