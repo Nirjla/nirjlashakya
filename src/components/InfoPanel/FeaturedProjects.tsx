@@ -1,9 +1,32 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ExternalLink, Github } from 'lucide-react'
-import { projectsData } from '../../data/sections'
+import supabase from '../../utils/supabase'
+
+type Project = {
+  name: string
+  description: string
+  tech: string[]
+  github: string | null
+  live: string | null
+  featured: boolean
+  sort_order: number
+}
 
 export default function FeaturedProjects() {
+  const [projects, setProjects] = useState<Project[]>([])
+
+  useEffect(() => {
+    supabase
+      .from('projects')
+      .select('*')
+      .eq('featured', true)
+      .order('sort_order', { ascending: true })
+      .then(({ data }) => {
+        if (data) setProjects(data)
+      })
+  }, [])
+
   return (
     <motion.div
       initial={{ y: 20, opacity: 0 }}
@@ -14,7 +37,7 @@ export default function FeaturedProjects() {
       <h3 className="text-xs font-bold text-accent uppercase tracking-wider mb-3">Featured Projects</h3>
 
       <div className="space-y-3">
-        {projectsData.map((project, index) => (
+        {projects.map((project, index) => (
           <motion.div
             key={project.name}
             initial={{ x: -20, opacity: 0 }}
