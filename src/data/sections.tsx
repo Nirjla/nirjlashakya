@@ -44,6 +44,26 @@ const getLeadership = async () => {
   return data;
 };
 
+const getProjects = async () => {
+  const { data, error } = await supabase
+    .from("projects")
+    .select("*")
+    .order("sort_order", { ascending: true });
+  if (error) {
+    console.error("error in projects", error);
+  }
+  return data;
+};
+
+export const getAboutBio = async (): Promise<string | null> => {
+  const { data, error } = await supabase.from("about").select("bio").single();
+  if (error) {
+    console.error("error fetching bio", error);
+    return null;
+  }
+  return data?.bio ?? null;
+};
+
 // ============ Utility Functions ============
 
 const displayMonth = (date: string) => {
@@ -66,26 +86,7 @@ const extractYear = (date: string, requireMonth: boolean = false) => {
 
 // ============ Section Renderers ============
 
-export const projectsData = [
-  {
-    name: "Terminal Portfolio",
-    description: "Interactive terminal-style portfolio website built with React and TypeScript",
-    tech: ["React", "TypeScript", "Tailwind CSS", "Supabase"],
-    github: "https://github.com/nirjla/nirjlashakya",
-    live: "https://nirjalashakya.com.np",
-    // stars: 5,
-    // forks: 2
-  },
-  {
-    name: "Node.js Repo Insights",
-    description: "A tool to get insights about a node.js repository",
-    tech: ["Node.js", "Express", "Flask", "Tailwind CSS", "PostgreSQL", "Typescript", "Python", "ML"],
-    github: "https://github.com/nirjla/repo-insights",
-    // live: "https://nodejs-repo-insights.vercel.app/",
-    // stars: 5,
-    // forks: 2
-  }
-];
+// projectsData is now served from the `projects` Supabase table.
 
 export const sections: Record<string, () => Promise<React.ReactNode>> = {
   about: async () => {
@@ -248,8 +249,7 @@ export const sections: Record<string, () => Promise<React.ReactNode>> = {
   },
 
   projects: async () => {
-    // Sample projects - you can later move this to Supabase
-    const projects = projectsData;
+    const projects = await getProjects();
 
     return (
       <div className="py-2 fade-in">
