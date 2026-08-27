@@ -1,9 +1,38 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ExternalLink, Github } from 'lucide-react'
-import { projectsData } from '../../data/sections'
+import supabase from '../../utils/supabase'
+
+type Project = {
+  name: string
+  description: string
+  tech: string[]
+  live?: string
+  github?: string
+}
 
 export default function FeaturedProjects() {
+  const [projectsData, setProjectsData] = useState<Project[]>([])
+
+  useEffect(() => {
+    const loadProjects = async () => {
+      const { data } = await supabase
+        .from('projects')
+        .select('name, description, tech, live, github')
+        .order('sort_order', { ascending: true })
+        .limit(3)
+
+      setProjectsData(
+        (data ?? []).map((project) => ({
+          ...project,
+          tech: Array.isArray(project.tech) ? project.tech : [],
+        }))
+      )
+    }
+
+    loadProjects()
+  }, [])
+
   return (
     <motion.div
       initial={{ y: 20, opacity: 0 }}
