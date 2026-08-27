@@ -1,7 +1,15 @@
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, ExternalLink } from 'lucide-react'
+import { Github, Linkedin, Mail } from 'lucide-react'
+import { getAboutBio } from '../../data/sections'
 
 export default function ProfileCard() {
+  const [bio, setBio] = useState<string | null>(null)
+
+  useEffect(() => {
+    getAboutBio().then(setBio)
+  }, [])
+
   return (
     <motion.div
       initial={{ y: 20, opacity: 0 }}
@@ -12,9 +20,9 @@ export default function ProfileCard() {
       {/* Profile Avatar - Logo */}
       <div className="flex justify-center mb-2">
         <div className="w-24 h-24 rounded-full bg-terminal-background border border-border">
-          <img 
-            src="/nirjla_terminal.png" 
-            alt="Nirjla Shakya Logo" 
+          <img
+            src="/nirjla_terminal.png"
+            alt="Nirjla Shakya Logo"
             className="w-full h-full object-cover rounded-full"
           />
         </div>
@@ -24,7 +32,7 @@ export default function ProfileCard() {
       <div className="text-center space-y-2">
         <h2 className="text-lg font-bold text-foreground">Nirjla Shakya</h2>
         <p className="text-xs text-accent-cyan font-mono uppercase tracking-widest">Software Engineer</p>
-        
+
         {/* Status Badges */}
         <div className="flex justify-center gap-2 flex-wrap pt-1">
           <span className="inline-block px-2.5 py-1 rounded-full text-xs font-mono bg-secondary text-accent-cyan border border-border">
@@ -38,11 +46,11 @@ export default function ProfileCard() {
 
       {/* Quick Bio */}
       <p className="text-xs text-muted-foreground text-center leading-relaxed">
-        Crafting elegant web experiences with modern tech stack. Passionate about performance and user experience.
+        {bio ?? ''}
       </p>
 
       {/* CTA Button */}
-      <motion.a 
+      <motion.a
         href="mailto:shakyanirjala6@gmail.com"
         whileTap={{ scale: 0.98 }}
         className="block text-center w-full px-3 py-2.5 rounded bg-secondary text-accent text-xs font-mono font-semibold border border-border hover:bg-secondary/80 transition-colors"
@@ -81,3 +89,4 @@ export default function ProfileCard() {
     </motion.div>
   )
 }
+
